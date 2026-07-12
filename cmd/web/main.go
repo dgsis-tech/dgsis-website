@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"html/template"
 	"log/slog"
 	"net/http"
 	"os"
@@ -15,17 +15,42 @@ func main() {
 		),
 	)
 
+	templates := template.Must(
+		template.ParseFiles(
+			"templates/layouts/base.html",
+			"templates/pages/home.html",
+		),
+	)
+
 	port := getEnv("PORT", "8080")
 	addr := ":" + port
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "DGSIS Website")
+		data := struct {
+			Title string
+		}{
+			Title: "DGSIS",
+		}
+
+		err := templates.ExecuteTemplate(
+			w,
+			"base",
+			data,
+		)
+
+		if err != nil {
+			logger.Error(
+				"template rendering failed",
+				"error",
+				err,
+			)
+		}
 	})
 
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 
-		fmt.Fprintln(w, `{"status":"ok"}`)
+		_, _ = w.Write([]byte(`{"status":"ok"}`))
 	})
 
 	logger.Info(
