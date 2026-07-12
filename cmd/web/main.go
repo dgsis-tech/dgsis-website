@@ -2,20 +2,49 @@ package main
 
 import (
 	"fmt"
-	"log"
+	"log/slog"
 	"net/http"
+	"os"
 )
 
 func main() {
-	const addr = ":8080"
+	logger := slog.New(
+		slog.NewJSONHandler(
+			os.Stdout,
+			nil,
+		),
+	)
+
+	port := getEnv("PORT", "8080")
+	addr := ":" + port
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "DGSIS Website")
 	})
 
-	log.Printf("server listening on %s", addr)
+	logger.Info(
+		"server starting",
+		"address",
+		addr,
+	)
 
 	if err := http.ListenAndServe(addr, nil); err != nil {
-		log.Fatal(err)
+		logger.Error(
+			"server stopped",
+			"error",
+			err,
+		)
+
+		os.Exit(1)
 	}
+}
+
+func getEnv(key string, fallback string) string {
+	value := os.Getenv(key)
+
+	if value == "" {
+		return fallback
+	}
+
+	return value
 }
