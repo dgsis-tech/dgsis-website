@@ -147,3 +147,25 @@ p {
 .engineering__item p {
 	margin-top: calc(var(--space-unit) * 2);
 }
+
+.work {
+	margin-top: calc(var(--space-unit) * 16);
+	max-width: 900px;
+}
+
+.work h2 {
+	font-size: clamp(2rem, 4vw, 3rem);
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+.work__description {
+	max-width: 700px;
+	margin-top: calc(var(--space-unit) * 3);
+}
+
+.work__placeholder {
+	margin-top: calc(var(--space-unit) * 6);
+	padding-top: calc(var(--space-unit) * 3);
+	border-top: 1px solid var(--color-border);
+}
