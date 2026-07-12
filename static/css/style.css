@@ -48,3 +48,30 @@ p {
 	color: var(--color-muted);
 	font-size: 1.125rem;
 }
+
+.hero {
+	max-width: 760px;
+	padding-top: calc(var(--space-unit) * 12);
+}
+
+.hero__eyebrow {
+	color: var(--color-muted);
+	font-size: 0.875rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.hero__description {
+	max-width: 600px;
+	margin-top: calc(var(--space-unit) * 3);
+}
+
+.hero__action {
+	display: inline-block;
+	margin-top: calc(var(--space-unit) * 5);
+	color: var(--color-text);
+	text-decoration: none;
+	border: 1px solid var(--color-border);
+	padding: calc(var(--space-unit) * 1.5)
+		calc(var(--space-unit) * 3);
+}
