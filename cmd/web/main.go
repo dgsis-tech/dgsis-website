@@ -22,6 +22,12 @@ func main() {
 		fmt.Fprintln(w, "DGSIS Website")
 	})
 
+	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+
+		fmt.Fprintln(w, `{"status":"ok"}`)
+	})
+
 	logger.Info(
 		"server starting",
 		"address",
