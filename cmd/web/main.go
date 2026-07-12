@@ -25,6 +25,14 @@ func main() {
 	port := getEnv("PORT", "8080")
 	addr := ":" + port
 
+	http.Handle(
+		"/static/",
+		http.StripPrefix(
+			"/static/",
+			http.FileServer(http.Dir("static")),
+		),
+	)
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		data := struct {
 			Title string
