@@ -75,3 +75,39 @@ p {
 	padding: calc(var(--space-unit) * 1.5)
 		calc(var(--space-unit) * 3);
 }
+
+.approach {
+	margin-top: calc(var(--space-unit) * 16);
+	max-width: 900px;
+}
+
+.approach h2 {
+	font-size: clamp(2rem, 4vw, 3rem);
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+.approach__description {
+	max-width: 700px;
+	margin-top: calc(var(--space-unit) * 3);
+}
+
+.approach__items {
+	display: grid;
+	gap: calc(var(--space-unit) * 6);
+	margin-top: calc(var(--space-unit) * 8);
+}
+
+.approach__item {
+	border-top: 1px solid var(--color-border);
+	padding-top: calc(var(--space-unit) * 3);
+}
+
+.approach__item h3 {
+	margin: 0;
+	font-size: 1.25rem;
+}
+
+.approach__item p {
+	margin-top: calc(var(--space-unit) * 2);
+}
