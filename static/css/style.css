@@ -43,7 +43,7 @@ body {
 
 	padding:
 		calc(var(--space-unit) * 3)
-		calc(var(--space-unit) * 8);
+		calc(var(--space-unit) * 6);
 
 	display: flex;
 	align-items: center;
@@ -89,7 +89,7 @@ body {
 
 	padding:
 		calc(var(--space-unit) * 6)
-		calc(var(--space-unit) * 8);
+		calc(var(--space-unit) * 6);
 
 	border-top: 1px solid var(--color-border);
 
@@ -103,7 +103,10 @@ body {
 main {
 	max-width: 1200px;
 	margin: 0 auto;
-	padding: calc(var(--space-unit) * 8);
+
+	padding:
+		calc(var(--space-unit) * 8)
+		calc(var(--space-unit) * 6);
 }
 
 h1 {
@@ -267,4 +270,60 @@ p {
 	padding:
 		calc(var(--space-unit) * 1.5)
 		calc(var(--space-unit) * 3);
+}
+
+@media (max-width: 768px) {
+
+	main {
+
+		padding:
+			calc(var(--space-unit) * 6)
+			calc(var(--space-unit) * 3);
+
+	}
+
+
+	.site-navigation {
+
+		padding:
+			calc(var(--space-unit) * 3)
+			calc(var(--space-unit) * 3);
+
+	}
+
+
+	.site-navigation__links {
+
+		gap:
+			calc(var(--space-unit) * 2);
+
+	}
+
+
+	.hero {
+
+		padding-top:
+			calc(var(--space-unit) * 8);
+
+	}
+
+
+	h1 {
+
+		font-size:
+			clamp(2.2rem, 10vw, 3rem);
+
+	}
+
+
+	.approach,
+	.engineering,
+	.work,
+	.contact {
+
+		margin-top:
+			calc(var(--space-unit) * 10);
+
+	}
+
 }
