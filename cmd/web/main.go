@@ -35,9 +35,11 @@ func main() {
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		data := struct {
-			Title string
+			Title       string
+			Description string
 		}{
-			Title: "DGSIS",
+			Title:       "DGSIS — Engineering software that lasts.",
+			Description: "DGSIS builds reliable digital systems designed to evolve, scale and remain maintainable for years.",
 		}
 
 		err := templates.ExecuteTemplate(
