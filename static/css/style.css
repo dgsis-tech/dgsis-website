@@ -111,3 +111,39 @@ p {
 .approach__item p {
 	margin-top: calc(var(--space-unit) * 2);
 }
+
+.engineering {
+	margin-top: calc(var(--space-unit) * 16);
+	max-width: 900px;
+}
+
+.engineering h2 {
+	font-size: clamp(2rem, 4vw, 3rem);
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+.engineering__description {
+	max-width: 700px;
+	margin-top: calc(var(--space-unit) * 3);
+}
+
+.engineering__items {
+	display: grid;
+	gap: calc(var(--space-unit) * 6);
+	margin-top: calc(var(--space-unit) * 8);
+}
+
+.engineering__item {
+	border-top: 1px solid var(--color-border);
+	padding-top: calc(var(--space-unit) * 3);
+}
+
+.engineering__item h3 {
+	margin: 0;
+	font-size: 1.25rem;
+}
+
+.engineering__item p {
+	margin-top: calc(var(--space-unit) * 2);
+}
