@@ -169,3 +169,34 @@ p {
 	padding-top: calc(var(--space-unit) * 3);
 	border-top: 1px solid var(--color-border);
 }
+
+.contact {
+	margin-top: calc(var(--space-unit) * 16);
+	max-width: 900px;
+	padding-bottom: calc(var(--space-unit) * 12);
+}
+
+.contact h2 {
+	font-size: clamp(2rem, 4vw, 3rem);
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+.contact__description {
+	max-width: 700px;
+	margin-top: calc(var(--space-unit) * 3);
+}
+
+.contact__action {
+	display: inline-block;
+	margin-top: calc(var(--space-unit) * 5);
+
+	color: var(--color-text);
+	text-decoration: none;
+
+	border: 1px solid var(--color-border);
+
+	padding:
+		calc(var(--space-unit) * 1.5)
+		calc(var(--space-unit) * 3);
+}
