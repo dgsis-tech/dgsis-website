@@ -49,11 +49,20 @@ func main() {
 		)
 
 		if err != nil {
+
 			logger.Error(
 				"template rendering failed",
 				"error",
 				err,
 			)
+
+			http.Error(
+				w,
+				"Internal Server Error",
+				http.StatusInternalServerError,
+			)
+
+			return
 		}
 	})
 
@@ -69,7 +78,11 @@ func main() {
 		addr,
 	)
 
-	if err := http.ListenAndServe(addr, nil); err != nil {
+	server := &http.Server{
+		Addr: addr,
+	}
+
+	if err := server.ListenAndServe(); err != nil {
 		logger.Error(
 			"server stopped",
 			"error",
