@@ -52,7 +52,10 @@
 
 	<header class="site-header">
 
-		<nav class="site-navigation">
+		<nav 
+			class="site-navigation"
+			aria-label="Main navigation"
+		>
 
 			<a href="/" class="site-logo">
 				DGSIS
@@ -79,10 +82,10 @@
 	</header>
 
 
-	<main>
+	<main id="main-content">
 
 		{{template "content" .}}
-
+	
 	</main>
 
 
