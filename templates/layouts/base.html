@@ -13,7 +13,50 @@
 
 <body>
 
-	{{template "content" .}}
+	<header class="site-header">
+
+		<nav class="site-navigation">
+
+			<a href="/" class="site-logo">
+				DGSIS
+			</a>
+
+			<div class="site-navigation__links">
+
+				<a href="/">
+					Home
+				</a>
+
+				<a href="/work">
+					Work
+				</a>
+
+				<a href="/contact">
+					Contact
+				</a>
+
+			</div>
+
+		</nav>
+
+	</header>
+
+
+	<main>
+
+		{{template "content" .}}
+
+	</main>
+
+
+	<footer class="site-footer">
+
+		<p>
+			© DGSIS. Engineering software that lasts.
+		</p>
+
+	</footer>
+
 
 </body>
 
