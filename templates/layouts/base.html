@@ -38,13 +38,13 @@
 
 	<meta
 		name="theme-color"
-		content="#0b0d10"
+		content="#F3F7FB"
 		id="meta-theme-color"
 	>
 
 	<meta
 		name="color-scheme"
-		content="dark light"
+		content="light dark"
 		id="meta-color-scheme"
 	>
 
@@ -54,6 +54,13 @@
 		rel="icon"
 		href="/static/images/favicon.svg"
 		type="image/svg+xml"
+	>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+		rel="stylesheet"
 	>
 
 	<link
@@ -80,19 +87,28 @@
 		>
 
 			<a href="/" class="site-logo" aria-label="DGSIS">
-				<svg class="site-logo__mark" viewBox="0 0 64 64" width="28" height="28" aria-hidden="true" focusable="false">
-					<path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"
-						d="M32 4.5 55.5 18v28L32 59.5 8.5 46V18L32 4.5Z"/>
-					<path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" opacity="0.72"
-						d="M32 16 46 24v16L32 48 18 40V24L32 16Z"/>
-					<circle cx="32" cy="32" r="3.2" fill="currentColor"/>
-					<circle cx="22.5" cy="26.5" r="2.1" fill="currentColor" opacity="0.72"/>
-					<circle cx="41.5" cy="26.5" r="2.1" fill="currentColor" opacity="0.72"/>
-					<circle cx="32" cy="42.5" r="2.1" fill="currentColor" opacity="0.72"/>
-					<path fill="none" stroke="currentColor" stroke-width="1.3" opacity="0.72"
-						d="M24.2 27.4 29.2 30.6M39.8 27.4 34.8 30.6M32 35.2 32 40.2"/>
+				<svg class="site-logo__mark" viewBox="0 0 120 120" width="34" height="34" aria-hidden="true" focusable="false">
+					<defs>
+						<linearGradient id="logo-grad" gradientUnits="userSpaceOnUse" x1="9" y1="4" x2="111" y2="116">
+							<stop offset="0%" stop-color="#0B5FA5"/>
+							<stop offset="100%" stop-color="#22C3E6"/>
+						</linearGradient>
+					</defs>
+					<polygon
+						points="60,4 111,32 111,88 60,116 9,88 9,32"
+						fill="none"
+						stroke="url(#logo-grad)"
+						stroke-width="5"
+						stroke-linejoin="round"
+					/>
+					<line x1="60" y1="36" x2="36" y2="72" stroke="url(#logo-grad)" stroke-width="3.5" stroke-linecap="round"/>
+					<line x1="60" y1="36" x2="84" y2="72" stroke="url(#logo-grad)" stroke-width="3.5" stroke-linecap="round"/>
+					<line x1="36" y1="72" x2="84" y2="72" stroke="url(#logo-grad)" stroke-width="3.5" stroke-linecap="round"/>
+					<circle cx="60" cy="36" r="10" fill="url(#logo-grad)"/>
+					<circle cx="36" cy="72" r="8" fill="#0B5FA5"/>
+					<circle cx="84" cy="72" r="8" fill="#22C3E6"/>
 				</svg>
-				<span>DGSIS</span>
+				<span class="site-logo__word">DGSIS</span>
 			</a>
 
 			<div class="site-navigation__end">
@@ -129,67 +145,97 @@
 
 				</div>
 
-				<div class="site-prefs">
-
-					<div class="lang-switch" role="group" aria-label="{{.Msg.LangLabel}}">
-						<a
-							href="?lang=es"
-							hreflang="es"
-							lang="es"
-							class="lang-switch__btn{{if eq .Lang "es"}} is-active{{end}}"
-							{{if eq .Lang "es"}}aria-current="true"{{end}}
-						>ES</a>
-						<a
-							href="?lang=en"
-							hreflang="en"
-							lang="en"
-							class="lang-switch__btn{{if eq .Lang "en"}} is-active{{end}}"
-							{{if eq .Lang "en"}}aria-current="true"{{end}}
-						>EN</a>
-					</div>
-
-					<div class="theme-switch" role="group" aria-label="{{.Msg.ThemeLabel}}">
-						<button
-							type="button"
-							class="theme-switch__btn"
-							data-theme-value="light"
-							aria-label="{{.Msg.ThemeLight}}"
-							title="{{.Msg.ThemeLight}}"
-						>
-							<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+				<details class="prefs-menu">
+					<summary
+						class="prefs-menu__summary"
+						aria-label="{{.Msg.PrefsLabel}}"
+					>
+						<span class="prefs-menu__lang" data-prefs-lang>{{if eq .Lang "en"}}EN{{else}}ES{{end}}</span>
+						<span class="prefs-menu__divider" aria-hidden="true"></span>
+						<span class="prefs-menu__theme-icon" data-prefs-theme-icon aria-hidden="true">
+							<svg class="prefs-icon prefs-icon--light" viewBox="0 0 24 24" width="16" height="16" focusable="false">
 								<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/>
 								<path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
 									d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
 							</svg>
-						</button>
-						<button
-							type="button"
-							class="theme-switch__btn"
-							data-theme-value="dark"
-							aria-label="{{.Msg.ThemeDark}}"
-							title="{{.Msg.ThemeDark}}"
-						>
-							<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+							<svg class="prefs-icon prefs-icon--dark" viewBox="0 0 24 24" width="16" height="16" focusable="false">
 								<path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"
 									d="M16.4 13.8A6.2 6.2 0 0 1 10.2 5.4 6.4 6.4 0 1 0 16.4 13.8Z"/>
 							</svg>
-						</button>
-						<button
-							type="button"
-							class="theme-switch__btn"
-							data-theme-value="system"
-							aria-label="{{.Msg.ThemeSystem}}"
-							title="{{.Msg.ThemeSystem}}"
-						>
-							<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+							<svg class="prefs-icon prefs-icon--system" viewBox="0 0 24 24" width="16" height="16" focusable="false">
 								<rect x="3.5" y="5" width="17" height="11.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
 								<path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
 									d="M8 19.5h8M12 16.5v3"/>
 							</svg>
-						</button>
-					</div>
+						</span>
+					</summary>
 
-				</div>
+					<div class="prefs-menu__panel">
+						<div class="prefs-menu__group" role="group" aria-label="{{.Msg.LangLabel}}">
+							<p class="prefs-menu__label">{{.Msg.LangLabel}}</p>
+							<div class="lang-switch">
+								<a
+									href="?lang=es"
+									hreflang="es"
+									lang="es"
+									class="lang-switch__btn{{if eq .Lang "es"}} is-active{{end}}"
+									{{if eq .Lang "es"}}aria-current="true"{{end}}
+								>ES</a>
+								<a
+									href="?lang=en"
+									hreflang="en"
+									lang="en"
+									class="lang-switch__btn{{if eq .Lang "en"}} is-active{{end}}"
+									{{if eq .Lang "en"}}aria-current="true"{{end}}
+								>EN</a>
+							</div>
+						</div>
+
+						<div class="prefs-menu__group" role="group" aria-label="{{.Msg.ThemeLabel}}">
+							<p class="prefs-menu__label">{{.Msg.ThemeLabel}}</p>
+							<div class="theme-switch">
+								<button
+									type="button"
+									class="theme-switch__btn"
+									data-theme-value="light"
+									aria-label="{{.Msg.ThemeLight}}"
+									title="{{.Msg.ThemeLight}}"
+								>
+									<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+										<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/>
+										<path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+											d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+									</svg>
+								</button>
+								<button
+									type="button"
+									class="theme-switch__btn"
+									data-theme-value="dark"
+									aria-label="{{.Msg.ThemeDark}}"
+									title="{{.Msg.ThemeDark}}"
+								>
+									<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+										<path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"
+											d="M16.4 13.8A6.2 6.2 0 0 1 10.2 5.4 6.4 6.4 0 1 0 16.4 13.8Z"/>
+									</svg>
+								</button>
+								<button
+									type="button"
+									class="theme-switch__btn"
+									data-theme-value="system"
+									aria-label="{{.Msg.ThemeSystem}}"
+									title="{{.Msg.ThemeSystem}}"
+								>
+									<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+										<rect x="3.5" y="5" width="17" height="11.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+										<path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+											d="M8 19.5h8M12 16.5v3"/>
+									</svg>
+								</button>
+							</div>
+						</div>
+					</div>
+				</details>
 
 			</div>
 
@@ -210,12 +256,26 @@
 		<div class="site-footer__inner">
 
 			<p class="site-footer__brand">
-				<svg class="site-footer__mark" viewBox="0 0 64 64" width="22" height="22" aria-hidden="true" focusable="false">
-					<path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"
-						d="M32 4.5 55.5 18v28L32 59.5 8.5 46V18L32 4.5Z"/>
-					<path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" opacity="0.72"
-						d="M32 16 46 24v16L32 48 18 40V24L32 16Z"/>
-					<circle cx="32" cy="32" r="3.2" fill="currentColor"/>
+				<svg class="site-footer__mark" viewBox="0 0 120 120" width="22" height="22" aria-hidden="true" focusable="false">
+					<defs>
+						<linearGradient id="footer-grad" gradientUnits="userSpaceOnUse" x1="9" y1="4" x2="111" y2="116">
+							<stop offset="0%" stop-color="#0B5FA5"/>
+							<stop offset="100%" stop-color="#22C3E6"/>
+						</linearGradient>
+					</defs>
+					<polygon
+						points="60,4 111,32 111,88 60,116 9,88 9,32"
+						fill="none"
+						stroke="url(#footer-grad)"
+						stroke-width="5"
+						stroke-linejoin="round"
+					/>
+					<line x1="60" y1="36" x2="36" y2="72" stroke="url(#footer-grad)" stroke-width="3.5" stroke-linecap="round"/>
+					<line x1="60" y1="36" x2="84" y2="72" stroke="url(#footer-grad)" stroke-width="3.5" stroke-linecap="round"/>
+					<line x1="36" y1="72" x2="84" y2="72" stroke="url(#footer-grad)" stroke-width="3.5" stroke-linecap="round"/>
+					<circle cx="60" cy="36" r="10" fill="url(#footer-grad)"/>
+					<circle cx="36" cy="72" r="8" fill="#0B5FA5"/>
+					<circle cx="84" cy="72" r="8" fill="#22C3E6"/>
 				</svg>
 				<span>DGSIS</span>
 			</p>
