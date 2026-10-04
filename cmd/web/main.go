@@ -7,6 +7,12 @@ import (
 	"os"
 )
 
+type pageData struct {
+	Title       string
+	Description string
+	CurrentPath string
+}
+
 func main() {
 	logger := slog.New(
 		slog.NewJSONHandler(
@@ -15,12 +21,10 @@ func main() {
 		),
 	)
 
-	templates := template.Must(
-		template.ParseFiles(
-			"templates/layouts/base.html",
-			"templates/pages/home.html",
-		),
-	)
+	homeTmpl := mustParsePage("templates/pages/home.html")
+	engineeringTmpl := mustParsePage("templates/pages/engineering.html")
+	workTmpl := mustParsePage("templates/pages/work.html")
+	contactTmpl := mustParsePage("templates/pages/contact.html")
 
 	port := getEnv("PORT", "8080")
 	addr := ":" + port
@@ -34,36 +38,40 @@ func main() {
 	)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		data := struct {
-			Title       string
-			Description string
-		}{
-			Title:       "DGSIS — Engineering software that lasts.",
-			Description: "DGSIS builds reliable digital systems designed to evolve, scale and remain maintainable for years.",
-		}
-
-		err := templates.ExecuteTemplate(
-			w,
-			"base",
-			data,
-		)
-
-		if err != nil {
-
-			logger.Error(
-				"template rendering failed",
-				"error",
-				err,
-			)
-
-			http.Error(
-				w,
-				"Internal Server Error",
-				http.StatusInternalServerError,
-			)
-
+		if r.URL.Path != "/" {
+			http.NotFound(w, r)
 			return
 		}
+
+		renderPage(w, r, logger, homeTmpl, pageData{
+			Title:       "DGSIS — Engineering software that lasts.",
+			Description: "DGSIS is a software engineering company that builds reliable digital systems designed to evolve, scale and remain maintainable for years.",
+			CurrentPath: "/",
+		})
+	})
+
+	http.HandleFunc("/engineering", func(w http.ResponseWriter, r *http.Request) {
+		renderPage(w, r, logger, engineeringTmpl, pageData{
+			Title:       "Engineering — DGSIS",
+			Description: "DGSIS designs and builds backend systems, software architecture and digital platforms focused on reliability and long-term maintainability.",
+			CurrentPath: "/engineering",
+		})
+	})
+
+	http.HandleFunc("/work", func(w http.ResponseWriter, r *http.Request) {
+		renderPage(w, r, logger, workTmpl, pageData{
+			Title:       "Work — DGSIS",
+			Description: "Selected engineering work from DGSIS. Case studies focused on problems, decisions, solutions and lasting results.",
+			CurrentPath: "/work",
+		})
+	})
+
+	http.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
+		renderPage(w, r, logger, contactTmpl, pageData{
+			Title:       "Contact — DGSIS",
+			Description: "Start a conversation with DGSIS about building digital systems with solid engineering foundations.",
+			CurrentPath: "/contact",
+		})
 	})
 
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
@@ -90,6 +98,50 @@ func main() {
 		)
 
 		os.Exit(1)
+	}
+}
+
+func mustParsePage(pagePath string) *template.Template {
+	return template.Must(
+		template.ParseFiles(
+			"templates/layouts/base.html",
+			pagePath,
+		),
+	)
+}
+
+func renderPage(
+	w http.ResponseWriter,
+	r *http.Request,
+	logger *slog.Logger,
+	tmpl *template.Template,
+	data pageData,
+) {
+	if r.Method != http.MethodGet && r.Method != http.MethodHead {
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	err := tmpl.ExecuteTemplate(
+		w,
+		"base",
+		data,
+	)
+
+	if err != nil {
+		logger.Error(
+			"template rendering failed",
+			"error",
+			err,
+			"path",
+			r.URL.Path,
+		)
+
+		http.Error(
+			w,
+			"Internal Server Error",
+			http.StatusInternalServerError,
+		)
 	}
 }
 
