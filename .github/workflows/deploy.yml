@@ -1,0 +1,96 @@
+name: Deploy dgsis-website
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Image tag to deploy (e.g. v0.1.0). Empty on non-tag = sha-XXXXXXX from this ref."
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  # Local Docker image name on the VPS (not a GHCR pull/push target).
+  IMAGE_NAME: ghcr.io/dgsis-tech/dgsis-website
+  COMPOSE_DIR: /srv/docker/compose/dgsis-website
+
+jobs:
+  # Single self-hosted job on the VPS: checkout → docker build (local)
+  # → blue/green. No registry login, no push, no pull of the app image.
+  deploy:
+    name: Build and blue/green deploy (VPS)
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Resolve image tag
+        id: tags
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.image_tag }}" ]; then
+            echo "tag=${{ inputs.image_tag }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.ref_type }}" = "tag" ]; then
+            echo "tag=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+          else
+            SHORT="$(printf '%s' "$GITHUB_SHA" | cut -c1-7)"
+            echo "tag=sha-${SHORT}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build image on VPS (local load, no registry)
+        run: |
+          set -euo pipefail
+          TAG="${{ steps.tags.outputs.tag }}"
+          CACHE="${HOME}/.cache/dgsis-website-buildx"
+          mkdir -p "$CACHE"
+          docker buildx build \
+            -f Dockerfile \
+            --load \
+            -t "${IMAGE_NAME}:${TAG}" \
+            --cache-from "type=local,src=${CACHE}" \
+            --cache-to "type=local,dest=${CACHE},mode=max" \
+            .
+
+      - name: Verify image is local
+        run: docker image inspect "${IMAGE_NAME}:${{ steps.tags.outputs.tag }}"
+
+      - name: Blue/green deploy
+        env:
+          IMAGE_TAG: ${{ steps.tags.outputs.tag }}
+          WEBSITE_IMAGE: ${{ env.IMAGE_NAME }}
+          ENV_FILE: ${{ env.COMPOSE_DIR }}/.env
+          COMPOSE_FILE: ${{ env.COMPOSE_DIR }}/docker-compose.yml
+          STATE_DIR: /var/lib/dgsis-website
+        run: |
+          set -euo pipefail
+          test -f "${ENV_FILE}"
+          test -f "${COMPOSE_FILE}"
+          ./deploy/deploy-blue-green.sh
+
+      - name: Host prune (images and buildx)
+        if: always()
+        env:
+          WEBSITE_IMAGE: ${{ env.IMAGE_NAME }}
+          BACKUP_DIR: ""
+        run: |
+          set -euo pipefail
+          export BUILDX_CACHE="${HOME}/.cache/dgsis-website-buildx"
+          if [[ -x ./scripts/cd-prune-host.sh ]]; then
+            ./scripts/cd-prune-host.sh
+          else
+            echo "cd-prune-host.sh missing (checkout failed?); skip host prune"
+          fi
+
+      - name: Clean job workspace
+        if: always()
+        run: |
+          set -euo pipefail
+          # Do not delete $HOME or the runner install — only this job's checkout.
+          find "${GITHUB_WORKSPACE}" -mindepth 1 -maxdepth 1 -exec rm -rf {} +

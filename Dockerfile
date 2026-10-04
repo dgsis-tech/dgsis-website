@@ -16,7 +16,8 @@ FROM alpine:latest
 
 WORKDIR /app
 
-RUN adduser -D appuser
+RUN apk add --no-cache wget \
+	&& adduser -D appuser
 
 COPY --from=builder /app/dgsis-website .
 COPY --from=builder /app/templates ./templates

@@ -1,0 +1,63 @@
+# DGSIS website blue/green behind the VPS-global Traefik.
+#
+# Keep this file + .env under /srv/docker/compose/dgsis-website/ on the VPS.
+# CD (.github/workflows/deploy.yml) checks out the tag, builds the image locally on
+# the VPS from the repo-root Dockerfile, then runs deploy/deploy-blue-green.sh from
+# git with ENV_FILE/COMPOSE_FILE pointing here. See deploy/README.md.
+#
+# Pattern mirrored from dgsis-tech/academy (which mirrored candlex-web):
+#   - Traefik is an EXTERNAL Docker network (not a Compose service here).
+#     On the shared dgsis VPS that network is named "frontend" (TRAEFIK_NETWORK=frontend).
+#   - Blue/green is local: traefik.enable flipped per color after health.
+#   - No Postgres. This site is a static-rendered Go server.
+#
+# Required env (see .env.example): IMAGE_TAG, TRAEFIK_NETWORK, WEBSITE_HOST
+# Optional: WEBSITE_IMAGE, TRAEFIK_ENTRYPOINT, TRAEFIK_CERTRESOLVER, PORT
+#
+# Deploy with deploy-blue-green.sh (sets ENABLE flags + active-color state).
+# Never `docker compose up` by hand: defaults leave both colors with
+# traefik.enable=false and the host returns 404.
+
+x-website: &website
+  image: ${WEBSITE_IMAGE:-ghcr.io/dgsis-tech/dgsis-website}:${IMAGE_TAG:?IMAGE_TAG required}
+  restart: unless-stopped
+  environment:
+    PORT: ${PORT:-8080}
+  networks:
+    - traefik
+  healthcheck:
+    test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/health"]
+    interval: 5s
+    timeout: 3s
+    retries: 12
+    start_period: 10s
+
+services:
+  website-blue:
+    <<: *website
+    container_name: dgsis-website-blue
+    labels:
+      - "traefik.enable=${BLUE_TRAEFIK_ENABLE:-false}"
+      - "traefik.docker.network=${TRAEFIK_NETWORK}"
+      - "traefik.http.routers.dgsis-website.rule=Host(`${WEBSITE_HOST:?WEBSITE_HOST required}`)"
+      - "traefik.http.routers.dgsis-website.entrypoints=${TRAEFIK_ENTRYPOINT:-websecure}"
+      - "traefik.http.routers.dgsis-website.tls=true"
+      - "traefik.http.routers.dgsis-website.tls.certresolver=${TRAEFIK_CERTRESOLVER:-letsencrypt}"
+      - "traefik.http.services.dgsis-website.loadbalancer.server.port=8080"
+
+  website-green:
+    <<: *website
+    container_name: dgsis-website-green
+    labels:
+      - "traefik.enable=${GREEN_TRAEFIK_ENABLE:-false}"
+      - "traefik.docker.network=${TRAEFIK_NETWORK}"
+      - "traefik.http.routers.dgsis-website.rule=Host(`${WEBSITE_HOST:?WEBSITE_HOST required}`)"
+      - "traefik.http.routers.dgsis-website.entrypoints=${TRAEFIK_ENTRYPOINT:-websecure}"
+      - "traefik.http.routers.dgsis-website.tls=true"
+      - "traefik.http.routers.dgsis-website.tls.certresolver=${TRAEFIK_CERTRESOLVER:-letsencrypt}"
+      - "traefik.http.services.dgsis-website.loadbalancer.server.port=8080"
+
+networks:
+  traefik:
+    external: true
+    name: ${TRAEFIK_NETWORK:?TRAEFIK_NETWORK required}

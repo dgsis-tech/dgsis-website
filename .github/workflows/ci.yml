@@ -1,0 +1,81 @@
+name: ci
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+# Self-hosted runner on the shared Traefik VPS (repo dgsis-tech/dgsis-website).
+# Same ops pattern as dgsis-tech/academy; see deploy/README.md.
+# Job timeout 5m: a hung job must not occupy the runner (default is 6h).
+jobs:
+  lint:
+    runs-on: self-hosted
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version: "1.26.x"
+          cache: false
+      - name: gofmt
+        run: |
+          unformatted=$(gofmt -l $(find . -name '*.go' -not -path './.git/*'))
+          if [ -n "$unformatted" ]; then
+            echo "gofmt needed:"; echo "$unformatted"; exit 1
+          fi
+      - name: go vet
+        run: go vet ./...
+      - name: Clean job workspace
+        if: always()
+        run: |
+          set -euo pipefail
+          # Do not delete $HOME or the runner install — only this job's checkout.
+          find "${GITHUB_WORKSPACE}" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+
+  unit:
+    runs-on: self-hosted
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          go-version: "1.26.x"
+          cache: false
+      - name: unit tests
+        run: go test ./...
+      - name: Clean job workspace
+        if: always()
+        run: |
+          set -euo pipefail
+          find "${GITHUB_WORKSPACE}" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+
+  docker:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: self-hosted
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: build server image
+        run: docker build -f Dockerfile -t dgsis-website:ci .
+      - name: Host prune (CI image + dangling)
+        if: always()
+        env:
+          # This site has no database dumps. Do not point at academy backups.
+          BACKUP_DIR: ""
+          EXTRA_PRUNE_IMAGES: dgsis-website:ci
+        run: |
+          set -euo pipefail
+          export BUILDX_CACHE="${HOME}/.cache/dgsis-website-buildx"
+          if [[ -x ./scripts/cd-prune-host.sh ]]; then
+            ./scripts/cd-prune-host.sh
+          else
+            echo "cd-prune-host.sh missing; skip host prune"
+            docker rmi dgsis-website:ci 2>/dev/null || true
+            docker image prune -f || true
+          fi
+      - name: Clean job workspace
+        if: always()
+        run: |
+          set -euo pipefail
+          find "${GITHUB_WORKSPACE}" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
