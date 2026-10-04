@@ -26,6 +26,7 @@ type Msg struct {
 	ThemeLight  string
 	ThemeDark   string
 	ThemeSystem string
+	PrefsLabel  string
 
 	FooterTagline   string
 	FooterCopyright string
@@ -238,6 +239,7 @@ var msgEN = Msg{
 	ThemeLight:  "Light",
 	ThemeDark:   "Dark",
 	ThemeSystem: "System",
+	PrefsLabel:  "Language and theme",
 
 	FooterTagline:   "Engineering software that lasts.",
 	FooterCopyright: "© DGSIS LLC",
@@ -381,6 +383,7 @@ var msgES = Msg{
 	ThemeLight:  "Claro",
 	ThemeDark:   "Oscuro",
 	ThemeSystem: "Sistema",
+	PrefsLabel:  "Idioma y tema",
 
 	FooterTagline:   "Ingeniería de software que perdura.",
 	FooterCopyright: "© DGSIS LLC",
