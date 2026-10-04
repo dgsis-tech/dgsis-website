@@ -20,6 +20,8 @@ type pageData struct {
 	Description  string
 	CurrentPath  string
 	FormFeedback template.HTML
+	Lang         string
+	Msg          Msg
 }
 
 func main() {
@@ -57,42 +59,78 @@ func main() {
 			return
 		}
 
+		lang, redirected := resolveLang(w, r)
+		if redirected {
+			return
+		}
+		msg := messages(lang)
+
 		renderPage(w, r, logger, homeTmpl, pageData{
-			Title:       "DGSIS — Engineering software that lasts.",
-			Description: "DGSIS is a software engineering company that builds reliable digital systems designed to evolve, scale and remain maintainable for years.",
+			Title:       msg.HomeTitle,
+			Description: msg.HomeDescription,
 			CurrentPath: "/",
+			Lang:        lang,
+			Msg:         msg,
 		})
 	})
 
 	mux.HandleFunc("/engineering", func(w http.ResponseWriter, r *http.Request) {
+		lang, redirected := resolveLang(w, r)
+		if redirected {
+			return
+		}
+		msg := messages(lang)
+
 		renderPage(w, r, logger, engineeringTmpl, pageData{
-			Title:       "Engineering — DGSIS",
-			Description: "DGSIS designs and builds backend systems, software architecture and digital platforms focused on reliability and long-term maintainability.",
+			Title:       msg.EngTitle,
+			Description: msg.EngDescription,
 			CurrentPath: "/engineering",
+			Lang:        lang,
+			Msg:         msg,
 		})
 	})
 
 	mux.HandleFunc("/work", func(w http.ResponseWriter, r *http.Request) {
+		lang, redirected := resolveLang(w, r)
+		if redirected {
+			return
+		}
+		msg := messages(lang)
+
 		renderPage(w, r, logger, workTmpl, pageData{
-			Title:       "Work — DGSIS",
-			Description: "Selected engineering work from DGSIS. Case studies focused on problems, decisions, solutions and lasting results.",
+			Title:       msg.WorkTitle,
+			Description: msg.WorkDescription,
 			CurrentPath: "/work",
+			Lang:        lang,
+			Msg:         msg,
 		})
 	})
 
 	mux.HandleFunc("/contact", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet, http.MethodHead:
+			lang, redirected := resolveLang(w, r)
+			if redirected {
+				return
+			}
+			msg := messages(lang)
+
 			feedback := template.HTML("")
 			if r.URL.Query().Get("sent") == "1" {
-				feedback = template.HTML(`<p class="contact-form__ok">Thank you. Your message was received. You can also reach us at <a href="mailto:info@dgsis.com">info@dgsis.com</a>.</p>`)
+				feedback = template.HTML(
+					`<p class="contact-form__ok">` +
+						html.EscapeString(msg.ContactOK) +
+						`</p>`,
+				)
 			}
 
 			renderPage(w, r, logger, contactTmpl, pageData{
-				Title:        "Contact — DGSIS",
-				Description:  "Start a conversation with DGSIS about building digital systems with solid engineering foundations.",
+				Title:        msg.ContactTitle,
+				Description:  msg.ContactDescription,
 				CurrentPath:  "/contact",
 				FormFeedback: feedback,
+				Lang:         lang,
+				Msg:          msg,
 			})
 
 		case http.MethodPost:
@@ -154,6 +192,7 @@ func renderPage(
 ) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Header().Set("Cache-Control", "no-cache")
+	w.Header().Set("Content-Language", data.Lang)
 
 	err := tmpl.ExecuteTemplate(
 		w,
@@ -184,16 +223,20 @@ func handleContactSubmit(
 	logger *slog.Logger,
 	contactTmpl *template.Template,
 ) {
+	// POST must not redirect for ?lang=; use cookie / Accept-Language / default ES.
+	lang := langFromRequest(r)
+	msg := messages(lang)
+
 	r.Body = http.MaxBytesReader(w, r.Body, 64<<10)
 
 	if err := r.ParseForm(); err != nil {
-		writeContactFeedback(w, r, logger, contactTmpl, false, "The message could not be read. Please try again or email info@dgsis.com.")
+		writeContactFeedback(w, r, logger, contactTmpl, lang, msg, false, msg.ContactErrRead)
 		return
 	}
 
 	// Honeypot
 	if strings.TrimSpace(r.FormValue("website")) != "" {
-		writeContactFeedback(w, r, logger, contactTmpl, true, "Thank you. Your message was received.")
+		writeContactFeedback(w, r, logger, contactTmpl, lang, msg, true, msg.ContactOKShort)
 		return
 	}
 
@@ -203,22 +246,22 @@ func handleContactSubmit(
 	message := strings.TrimSpace(r.FormValue("message"))
 
 	if utf8.RuneCountInString(name) < 2 || utf8.RuneCountInString(name) > 80 {
-		writeContactFeedback(w, r, logger, contactTmpl, false, "Please enter a name between 2 and 80 characters.")
+		writeContactFeedback(w, r, logger, contactTmpl, lang, msg, false, msg.ContactErrName)
 		return
 	}
 
 	if _, err := mail.ParseAddress(email); err != nil || utf8.RuneCountInString(email) > 120 {
-		writeContactFeedback(w, r, logger, contactTmpl, false, "Please enter a valid email address.")
+		writeContactFeedback(w, r, logger, contactTmpl, lang, msg, false, msg.ContactErrEmail)
 		return
 	}
 
 	if utf8.RuneCountInString(company) > 120 {
-		writeContactFeedback(w, r, logger, contactTmpl, false, "Company name is too long.")
+		writeContactFeedback(w, r, logger, contactTmpl, lang, msg, false, msg.ContactErrCompany)
 		return
 	}
 
 	if utf8.RuneCountInString(message) < 20 || utf8.RuneCountInString(message) > 4000 {
-		writeContactFeedback(w, r, logger, contactTmpl, false, "Please describe the project in 20–4000 characters.")
+		writeContactFeedback(w, r, logger, contactTmpl, lang, msg, false, msg.ContactErrMessage)
 		return
 	}
 
@@ -228,6 +271,7 @@ func handleContactSubmit(
 		"email", email,
 		"company", company,
 		"message_length", utf8.RuneCountInString(message),
+		"lang", lang,
 	)
 
 	writeContactFeedback(
@@ -235,9 +279,26 @@ func handleContactSubmit(
 		r,
 		logger,
 		contactTmpl,
+		lang,
+		msg,
 		true,
-		"Thank you. Your message was received. You can also reach us at info@dgsis.com.",
+		msg.ContactOK,
 	)
+}
+
+func langFromRequest(r *http.Request) string {
+	if c, err := r.Cookie(langCookieName); err == nil {
+		if v := normalizeLang(c.Value); v != "" {
+			return v
+		}
+	}
+	for _, part := range strings.Split(r.Header.Get("Accept-Language"), ",") {
+		token := strings.TrimSpace(strings.SplitN(part, ";", 2)[0])
+		if v := normalizeLang(token); v != "" {
+			return v
+		}
+	}
+	return langES
 }
 
 func writeContactFeedback(
@@ -245,6 +306,8 @@ func writeContactFeedback(
 	r *http.Request,
 	logger *slog.Logger,
 	contactTmpl *template.Template,
+	lang string,
+	msg Msg,
 	ok bool,
 	message string,
 ) {
@@ -275,10 +338,12 @@ func writeContactFeedback(
 	}
 
 	renderPage(w, r, logger, contactTmpl, pageData{
-		Title:        "Contact — DGSIS",
-		Description:  "Start a conversation with DGSIS about building digital systems with solid engineering foundations.",
+		Title:        msg.ContactTitle,
+		Description:  msg.ContactDescription,
 		CurrentPath:  "/contact",
 		FormFeedback: template.HTML(fragment),
+		Lang:         lang,
+		Msg:          msg,
 	})
 }
 
