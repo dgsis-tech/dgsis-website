@@ -11,85 +11,179 @@
 	</h1>
 
 	<p class="page-intro__description">
-		Case studies will show how we approach real problems: the
-		context, the technical decisions, the solution and the result
-		that remains useful over time.
+		Each case follows the same structure: problem, decisions,
+		solution and result. These examples illustrate how DGSIS thinks
+		about durable systems.
+	</p>
+
+	<p class="provisional-note">
+		Illustrative placeholders — not verified client engagements.
 	</p>
 
 </section>
 
 
-<section class="work" aria-labelledby="cases-title">
+<article class="case" id="case-ledger">
 
-	<h2 id="cases-title">
-		Case study structure.
-	</h2>
+	<p class="case__eyebrow">Placeholder case study</p>
 
-	<p class="work__description">
-		We publish work only when it can demonstrate engineering
-		judgment clearly — not as a commercial portfolio of logos.
+	<h2>Operational ledger for a growing product company</h2>
+
+	<p class="case__summary">
+		A product team needed a reliable core for billing-related
+		operations without locking the business into an opaque platform.
 	</p>
 
-	<div class="work__items">
+	<div class="case__grid">
 
-		<article class="work__item work__item--empty">
-
-			<h3>
-				Problem
-			</h3>
-
+		<section>
+			<h3>Problem</h3>
 			<p>
-				What needed to change, and why the existing approach was
-				no longer enough.
+				Manual reconciliation and loosely coupled scripts made
+				financial operations fragile as volume grew. Changes were
+				slow and risky because knowledge lived in a few people.
 			</p>
+		</section>
 
-		</article>
-
-		<article class="work__item work__item--empty">
-
-			<h3>
-				Decisions
-			</h3>
-
+		<section>
+			<h3>Decisions</h3>
 			<p>
-				The technical choices that shaped the system, and the
-				reasons behind them.
+				Model clear domain boundaries, keep the service surface
+				small, and prefer explicit workflows over hidden side
+				effects. Choose boring, operable building blocks over a
+				complex event mesh.
 			</p>
+		</section>
 
-		</article>
-
-		<article class="work__item work__item--empty">
-
-			<h3>
-				Solution
-			</h3>
-
+		<section>
+			<h3>Solution</h3>
 			<p>
-				How the system was structured to stay understandable and
-				operable.
+				A focused backend service with stable APIs, audited state
+				transitions and operational visibility. Integrations were
+				isolated so the core ledger could evolve independently.
 			</p>
+		</section>
 
-		</article>
-
-		<article class="work__item work__item--empty">
-
-			<h3>
-				Result
-			</h3>
-
+		<section>
+			<h3>Result</h3>
 			<p>
-				What became more stable, clearer or ready to evolve.
+				Operations became repeatable, onboarding new engineers
+				got simpler, and the company could change pricing rules
+				without rewriting surrounding systems.
 			</p>
-
-		</article>
+		</section>
 
 	</div>
 
-	<p class="work__placeholder">
-		Detailed case studies are coming soon.
+</article>
+
+
+<article class="case" id="case-platform">
+
+	<p class="case__eyebrow">Placeholder case study</p>
+
+	<h2>Learning platform foundation for continuous growth</h2>
+
+	<p class="case__summary">
+		An education business needed a digital platform that could
+		support more users and content without accumulating structural debt.
 	</p>
 
-</section>
+	<div class="case__grid">
+
+		<section>
+			<h3>Problem</h3>
+			<p>
+				The existing application mixed presentation, business
+				rules and integrations. Every feature release increased
+				the cost of the next change.
+			</p>
+		</section>
+
+		<section>
+			<h3>Decisions</h3>
+			<p>
+				Separate the platform into maintainable layers, keep the
+				HTML-facing experience simple, and design data models for
+				long-term content growth rather than short-term screens.
+			</p>
+		</section>
+
+		<section>
+			<h3>Solution</h3>
+			<p>
+				A clearer architecture for users, courses and access
+				rules, with backend services shaped around real workflows
+				instead of UI convenience.
+			</p>
+		</section>
+
+		<section>
+			<h3>Result</h3>
+			<p>
+				The team could ship platform improvements with less
+				regression risk, and the system remained understandable
+				as the catalog and audience expanded.
+			</p>
+		</section>
+
+	</div>
+
+</article>
+
+
+<article class="case" id="case-automation">
+
+	<p class="case__eyebrow">Placeholder case study</p>
+
+	<h2>Process automation for internal operations</h2>
+
+	<p class="case__summary">
+		A company digitalizing internal processes needed software that
+		reduced manual work without creating a fragile integration tangle.
+	</p>
+
+	<div class="case__grid">
+
+		<section>
+			<h3>Problem</h3>
+			<p>
+				Critical workflows depended on spreadsheets and ad-hoc
+				tools. Errors were hard to detect, and every new system
+				increased operational uncertainty.
+			</p>
+		</section>
+
+		<section>
+			<h3>Decisions</h3>
+			<p>
+				Automate only the steps that create durable value, keep
+				human checkpoints where judgment matters, and make every
+				integration ownership-explicit.
+			</p>
+		</section>
+
+		<section>
+			<h3>Solution</h3>
+			<p>
+				A restrained automation layer with clear inputs/outputs,
+				recoverable jobs and logs that operators can trust during
+				incidents.
+			</p>
+		</section>
+
+		<section>
+			<h3>Result</h3>
+			<p>
+				Cycle time dropped on routine work, failure modes became
+				visible, and the organization could extend automation
+				without rewriting the foundation.
+			</p>
+		</section>
+
+	</div>
+
+</article>
 
 
 <section class="contact" aria-labelledby="work-contact-title">

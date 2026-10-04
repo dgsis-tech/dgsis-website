@@ -36,6 +36,16 @@
 		content="website"
 	>
 
+	<meta
+		name="theme-color"
+		content="#0b0d10"
+	>
+
+	<meta
+		name="color-scheme"
+		content="dark"
+	>
+
 	<title>{{.Title}}</title>
 
 	<link
@@ -48,6 +58,8 @@
 		rel="stylesheet"
 		href="/static/css/style.css"
 	>
+
+	<script src="/static/js/htmx.min.js" defer></script>
 
 </head>
 
@@ -65,9 +77,13 @@
 		>
 
 			<a href="/" class="site-logo" aria-label="DGSIS home">
-				<svg class="site-logo__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-					<path d="M16 2.5 28.5 9.5v13L16 29.5 3.5 22.5v-13L16 2.5Z" />
-				</svg>
+				<img
+					class="site-logo__mark"
+					src="/static/images/logo.svg"
+					width="28"
+					height="28"
+					alt=""
+				>
 				<span>DGSIS</span>
 			</a>
 
@@ -115,12 +131,19 @@
 	</main>
 
 
-	<footer class="site-footer">
+	<footer class="site-footer" role="contentinfo">
 
 		<div class="site-footer__inner">
 
 			<p class="site-footer__brand">
-				DGSIS
+				<img
+					class="site-footer__mark"
+					src="/static/images/logo.svg"
+					width="22"
+					height="22"
+					alt=""
+				>
+				<span>DGSIS</span>
 			</p>
 
 			<p>
