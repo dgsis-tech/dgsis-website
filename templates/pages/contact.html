@@ -3,17 +3,15 @@
 <section class="page-intro" aria-labelledby="page-title">
 
 	<p class="page-intro__eyebrow">
-		Contact
+		{{.Msg.ContactEyebrow}}
 	</p>
 
 	<h1 id="page-title">
-		Let's build something that lasts.
+		{{.Msg.ContactH1}}
 	</h1>
 
 	<p class="page-intro__description">
-		If you have a project that needs thoughtful engineering, we
-		welcome a direct conversation about the problem, constraints
-		and the foundation required.
+		{{.Msg.ContactLead}}
 	</p>
 
 </section>
@@ -22,16 +20,15 @@
 <section class="contact contact--page" aria-labelledby="conversation-title">
 
 	<h2 id="conversation-title">
-		Start a technical conversation.
+		{{.Msg.ContactConvH2}}
 	</h2>
 
 	<p class="contact__description">
-		Share context about your product, platform or process. Use the
-		form below, or email us directly.
+		{{.Msg.ContactConvLead}}
 	</p>
 
 	<a href="mailto:info@dgsis.com" class="contact__action">
-		Email info@dgsis.com
+		{{.Msg.ContactMailto}}
 	</a>
 
 	<form
@@ -46,7 +43,7 @@
 	>
 
 		<div class="contact-form__field">
-			<label for="name">Name</label>
+			<label for="name">{{.Msg.ContactName}}</label>
 			<input
 				id="name"
 				name="name"
@@ -58,7 +55,7 @@
 		</div>
 
 		<div class="contact-form__field">
-			<label for="email">Email</label>
+			<label for="email">{{.Msg.ContactEmail}}</label>
 			<input
 				id="email"
 				name="email"
@@ -70,7 +67,7 @@
 		</div>
 
 		<div class="contact-form__field">
-			<label for="company">Company <span class="contact-form__optional">(optional)</span></label>
+			<label for="company">{{.Msg.ContactCompany}} <span class="contact-form__optional">{{.Msg.ContactOptional}}</span></label>
 			<input
 				id="company"
 				name="company"
@@ -81,7 +78,7 @@
 		</div>
 
 		<div class="contact-form__field">
-			<label for="message">Project context</label>
+			<label for="message">{{.Msg.ContactMessage}}</label>
 			<textarea
 				id="message"
 				name="message"
@@ -89,7 +86,7 @@
 				required
 				minlength="20"
 				maxlength="4000"
-				placeholder="What are you building, what constraints matter, and what does success look like?"
+				placeholder="{{.Msg.ContactPlaceholder}}"
 			></textarea>
 		</div>
 
@@ -105,7 +102,7 @@
 		</div>
 
 		<button type="submit" class="contact__action contact-form__submit">
-			Send message
+			{{.Msg.ContactSubmit}}
 		</button>
 
 		<div
@@ -117,9 +114,7 @@
 	</form>
 
 	<p class="contact__note">
-		Prefer email? Write to
-		<a href="mailto:info@dgsis.com">info@dgsis.com</a>.
-		Form submissions are validated on the server and recorded for follow-up.
+		{{.Msg.ContactNote}}
 	</p>
 
 </section>

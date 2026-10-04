@@ -6,24 +6,23 @@
 >
 
 	<p class="hero__eyebrow">
-		Software engineering company
+		{{.Msg.HomeEyebrow}}
 	</p>
 
 	<h1 id="hero-title">
-		Engineering software that lasts.
+		{{.Msg.HomeH1}}
 	</h1>
 
 	<p class="hero__description">
-		We build reliable digital systems designed to evolve,
-		scale and remain maintainable for years.
+		{{.Msg.HomeLead}}
 	</p>
 
 	<div class="hero__actions">
 		<a href="/contact" class="hero__action">
-			Start a conversation
+			{{.Msg.HomeCTA}}
 		</a>
 		<a href="/engineering" class="hero__action hero__action--secondary">
-			Explore engineering
+			{{.Msg.HomeCTASecondary}}
 		</a>
 	</div>
 
@@ -33,12 +32,11 @@
 <section class="approach" aria-labelledby="approach-title">
 
 	<h2 id="approach-title">
-		Engineering with intention.
+		{{.Msg.HomeApproachH2}}
 	</h2>
 
 	<p class="approach__description">
-		Good software is not defined by how much technology it uses,
-		but by the quality of the decisions behind it.
+		{{.Msg.HomeApproachLead}}
 	</p>
 
 
@@ -47,12 +45,11 @@
 		<article class="approach__item">
 
 			<h3>
-				Simplicity
+				{{.Msg.HomeSimplicityH3}}
 			</h3>
 
 			<p>
-				The simplest solution that solves the problem correctly
-				is usually the best one.
+				{{.Msg.HomeSimplicityP}}
 			</p>
 
 		</article>
@@ -61,12 +58,11 @@
 		<article class="approach__item">
 
 			<h3>
-				Maintainability
+				{{.Msg.HomeMaintainH3}}
 			</h3>
 
 			<p>
-				Software should remain understandable and adaptable
-				years after it is built.
+				{{.Msg.HomeMaintainP}}
 			</p>
 
 		</article>
@@ -75,12 +71,11 @@
 		<article class="approach__item">
 
 			<h3>
-				Technical judgment
+				{{.Msg.HomeJudgmentH3}}
 			</h3>
 
 			<p>
-				Every technical decision should have a clear reason
-				behind it.
+				{{.Msg.HomeJudgmentP}}
 			</p>
 
 		</article>
@@ -92,12 +87,11 @@
 <section class="engineering" aria-labelledby="engineering-title">
 
 	<h2 id="engineering-title">
-		Engineering systems that scale with purpose.
+		{{.Msg.HomeEngH2}}
 	</h2>
 
 	<p class="engineering__description">
-		We design and build digital systems focused on reliability,
-		performance and long-term maintainability.
+		{{.Msg.HomeEngLead}}
 	</p>
 
 
@@ -106,12 +100,11 @@
 		<article class="engineering__item">
 
 			<h3>
-				Backend Systems
+				{{.Msg.HomeBackendH3}}
 			</h3>
 
 			<p>
-				Reliable services and APIs built with simplicity,
-				clarity and operational stability in mind.
+				{{.Msg.HomeBackendP}}
 			</p>
 
 		</article>
@@ -120,12 +113,11 @@
 		<article class="engineering__item">
 
 			<h3>
-				Software Architecture
+				{{.Msg.HomeArchH3}}
 			</h3>
 
 			<p>
-				Systems designed around clear boundaries,
-				maintainable structures and thoughtful decisions.
+				{{.Msg.HomeArchP}}
 			</p>
 
 		</article>
@@ -134,12 +126,11 @@
 		<article class="engineering__item">
 
 			<h3>
-				Digital Platforms
+				{{.Msg.HomePlatformsH3}}
 			</h3>
 
 			<p>
-				Complete platforms built to support real users,
-				business processes and future growth.
+				{{.Msg.HomePlatformsP}}
 			</p>
 
 		</article>
@@ -147,7 +138,7 @@
 	</div>
 
 	<p class="section__link">
-		<a href="/engineering">Read more about our engineering approach</a>
+		<a href="/engineering">{{.Msg.HomeEngLink}}</a>
 	</p>
 
 </section>
@@ -155,49 +146,44 @@
 <section class="work" aria-labelledby="work-title">
 
 	<h2 id="work-title">
-		Selected engineering work.
+		{{.Msg.HomeWorkH2}}
 	</h2>
 
 	<p class="work__description">
-		Every system we build starts with understanding the problem,
-		making deliberate technical decisions and creating foundations
-		that can evolve over time.
+		{{.Msg.HomeWorkLead}}
 	</p>
 
 	<p class="provisional-note">
-		Illustrative placeholders — not verified client engagements.
+		{{.Msg.HomeProvisional}}
 	</p>
 
 	<div class="work__items">
 
 		<article class="work__item">
-			<h3>Operational ledger</h3>
+			<h3>{{.Msg.HomeWork1H3}}</h3>
 			<p>
-				Clear domain boundaries and operable APIs for growing
-				product operations.
+				{{.Msg.HomeWork1P}}
 			</p>
 		</article>
 
 		<article class="work__item">
-			<h3>Learning platform foundation</h3>
+			<h3>{{.Msg.HomeWork2H3}}</h3>
 			<p>
-				Architecture shaped for content growth without
-				structural debt.
+				{{.Msg.HomeWork2P}}
 			</p>
 		</article>
 
 		<article class="work__item">
-			<h3>Process automation</h3>
+			<h3>{{.Msg.HomeWork3H3}}</h3>
 			<p>
-				Restrained automation with visible failure modes and
-				explicit ownership.
+				{{.Msg.HomeWork3P}}
 			</p>
 		</article>
 
 	</div>
 
 	<p class="section__link">
-		<a href="/work">View case studies</a>
+		<a href="/work">{{.Msg.HomeWorkLink}}</a>
 	</p>
 
 </section>
@@ -205,16 +191,15 @@
 <section class="contact" aria-labelledby="contact-title">
 
 	<h2 id="contact-title">
-		Let's build something that lasts.
+		{{.Msg.HomeContactH2}}
 	</h2>
 
 	<p class="contact__description">
-		Have a project that requires thoughtful engineering?
-		Let's discuss how we can build a solid foundation together.
+		{{.Msg.HomeContactLead}}
 	</p>
 
 	<a href="/contact" class="contact__action">
-		Start a conversation
+		{{.Msg.HomeCTA}}
 	</a>
 
 </section>

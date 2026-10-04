@@ -1,6 +1,6 @@
 {{define "base"}}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{.Lang}}" data-theme="system">
 
 <head>
 
@@ -39,11 +39,13 @@
 	<meta
 		name="theme-color"
 		content="#0b0d10"
+		id="meta-theme-color"
 	>
 
 	<meta
 		name="color-scheme"
-		content="dark"
+		content="dark light"
+		id="meta-color-scheme"
 	>
 
 	<title>{{.Title}}</title>
@@ -59,6 +61,7 @@
 		href="/static/css/style.css"
 	>
 
+	<script src="/static/js/prefs.js"></script>
 	<script src="/static/js/htmx.min.js" defer></script>
 
 </head>
@@ -66,56 +69,127 @@
 <body>
 
 	<a class="skip-link" href="#main-content">
-		Skip to content
+		{{.Msg.SkipToContent}}
 	</a>
 
 	<header class="site-header">
 
 		<nav
 			class="site-navigation"
-			aria-label="Main navigation"
+			aria-label="{{.Msg.NavAria}}"
 		>
 
-			<a href="/" class="site-logo" aria-label="DGSIS home">
-				<img
-					class="site-logo__mark"
-					src="/static/images/logo.svg"
-					width="28"
-					height="28"
-					alt=""
-				>
+			<a href="/" class="site-logo" aria-label="DGSIS">
+				<svg class="site-logo__mark" viewBox="0 0 64 64" width="28" height="28" aria-hidden="true" focusable="false">
+					<path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"
+						d="M32 4.5 55.5 18v28L32 59.5 8.5 46V18L32 4.5Z"/>
+					<path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" opacity="0.72"
+						d="M32 16 46 24v16L32 48 18 40V24L32 16Z"/>
+					<circle cx="32" cy="32" r="3.2" fill="currentColor"/>
+					<circle cx="22.5" cy="26.5" r="2.1" fill="currentColor" opacity="0.72"/>
+					<circle cx="41.5" cy="26.5" r="2.1" fill="currentColor" opacity="0.72"/>
+					<circle cx="32" cy="42.5" r="2.1" fill="currentColor" opacity="0.72"/>
+					<path fill="none" stroke="currentColor" stroke-width="1.3" opacity="0.72"
+						d="M24.2 27.4 29.2 30.6M39.8 27.4 34.8 30.6M32 35.2 32 40.2"/>
+				</svg>
 				<span>DGSIS</span>
 			</a>
 
-			<div class="site-navigation__links">
+			<div class="site-navigation__end">
 
-				<a
-					href="/"
-					{{if eq .CurrentPath "/"}}aria-current="page"{{end}}
-				>
-					Home
-				</a>
+				<div class="site-navigation__links">
 
-				<a
-					href="/engineering"
-					{{if eq .CurrentPath "/engineering"}}aria-current="page"{{end}}
-				>
-					Engineering
-				</a>
+					<a
+						href="/"
+						{{if eq .CurrentPath "/"}}aria-current="page"{{end}}
+					>
+						{{.Msg.NavHome}}
+					</a>
 
-				<a
-					href="/work"
-					{{if eq .CurrentPath "/work"}}aria-current="page"{{end}}
-				>
-					Work
-				</a>
+					<a
+						href="/engineering"
+						{{if eq .CurrentPath "/engineering"}}aria-current="page"{{end}}
+					>
+						{{.Msg.NavEngineering}}
+					</a>
 
-				<a
-					href="/contact"
-					{{if eq .CurrentPath "/contact"}}aria-current="page"{{end}}
-				>
-					Contact
-				</a>
+					<a
+						href="/work"
+						{{if eq .CurrentPath "/work"}}aria-current="page"{{end}}
+					>
+						{{.Msg.NavWork}}
+					</a>
+
+					<a
+						href="/contact"
+						{{if eq .CurrentPath "/contact"}}aria-current="page"{{end}}
+					>
+						{{.Msg.NavContact}}
+					</a>
+
+				</div>
+
+				<div class="site-prefs">
+
+					<div class="lang-switch" role="group" aria-label="{{.Msg.LangLabel}}">
+						<a
+							href="?lang=es"
+							hreflang="es"
+							lang="es"
+							class="lang-switch__btn{{if eq .Lang "es"}} is-active{{end}}"
+							{{if eq .Lang "es"}}aria-current="true"{{end}}
+						>ES</a>
+						<a
+							href="?lang=en"
+							hreflang="en"
+							lang="en"
+							class="lang-switch__btn{{if eq .Lang "en"}} is-active{{end}}"
+							{{if eq .Lang "en"}}aria-current="true"{{end}}
+						>EN</a>
+					</div>
+
+					<div class="theme-switch" role="group" aria-label="{{.Msg.ThemeLabel}}">
+						<button
+							type="button"
+							class="theme-switch__btn"
+							data-theme-value="light"
+							aria-label="{{.Msg.ThemeLight}}"
+							title="{{.Msg.ThemeLight}}"
+						>
+							<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+								<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/>
+								<path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+									d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/>
+							</svg>
+						</button>
+						<button
+							type="button"
+							class="theme-switch__btn"
+							data-theme-value="dark"
+							aria-label="{{.Msg.ThemeDark}}"
+							title="{{.Msg.ThemeDark}}"
+						>
+							<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+								<path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"
+									d="M16.4 13.8A6.2 6.2 0 0 1 10.2 5.4 6.4 6.4 0 1 0 16.4 13.8Z"/>
+							</svg>
+						</button>
+						<button
+							type="button"
+							class="theme-switch__btn"
+							data-theme-value="system"
+							aria-label="{{.Msg.ThemeSystem}}"
+							title="{{.Msg.ThemeSystem}}"
+						>
+							<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+								<rect x="3.5" y="5" width="17" height="11.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+								<path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+									d="M8 19.5h8M12 16.5v3"/>
+							</svg>
+						</button>
+					</div>
+
+				</div>
 
 			</div>
 
@@ -136,24 +210,24 @@
 		<div class="site-footer__inner">
 
 			<p class="site-footer__brand">
-				<img
-					class="site-footer__mark"
-					src="/static/images/logo.svg"
-					width="22"
-					height="22"
-					alt=""
-				>
+				<svg class="site-footer__mark" viewBox="0 0 64 64" width="22" height="22" aria-hidden="true" focusable="false">
+					<path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"
+						d="M32 4.5 55.5 18v28L32 59.5 8.5 46V18L32 4.5Z"/>
+					<path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" opacity="0.72"
+						d="M32 16 46 24v16L32 48 18 40V24L32 16Z"/>
+					<circle cx="32" cy="32" r="3.2" fill="currentColor"/>
+				</svg>
 				<span>DGSIS</span>
 			</p>
 
 			<p>
-				Engineering software that lasts.
+				{{.Msg.FooterTagline}}
 			</p>
 
 			<p class="site-footer__meta">
 				<a href="mailto:info@dgsis.com">info@dgsis.com</a>
 				<span aria-hidden="true">·</span>
-				<span>© DGSIS LLC</span>
+				<span>{{.Msg.FooterCopyright}}</span>
 			</p>
 
 		</div>

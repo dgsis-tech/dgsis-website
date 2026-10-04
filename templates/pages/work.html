@@ -3,21 +3,19 @@
 <section class="page-intro" aria-labelledby="page-title">
 
 	<p class="page-intro__eyebrow">
-		Work
+		{{.Msg.WorkEyebrow}}
 	</p>
 
 	<h1 id="page-title">
-		Selected engineering work.
+		{{.Msg.WorkH1}}
 	</h1>
 
 	<p class="page-intro__description">
-		Each case follows the same structure: problem, decisions,
-		solution and result. These examples illustrate how DGSIS thinks
-		about durable systems.
+		{{.Msg.WorkLead}}
 	</p>
 
 	<p class="provisional-note">
-		Illustrative placeholders — not verified client engagements.
+		{{.Msg.WorkProvisional}}
 	</p>
 
 </section>
@@ -25,51 +23,41 @@
 
 <article class="case" id="case-ledger">
 
-	<p class="case__eyebrow">Placeholder case study</p>
+	<p class="case__eyebrow">{{.Msg.WorkCaseLabel}}</p>
 
-	<h2>Operational ledger for a growing product company</h2>
+	<h2>{{.Msg.WorkCase1H2}}</h2>
 
 	<p class="case__summary">
-		A product team needed a reliable core for billing-related
-		operations without locking the business into an opaque platform.
+		{{.Msg.WorkCase1Sum}}
 	</p>
 
 	<div class="case__grid">
 
 		<section>
-			<h3>Problem</h3>
+			<h3>{{.Msg.WorkProblem}}</h3>
 			<p>
-				Manual reconciliation and loosely coupled scripts made
-				financial operations fragile as volume grew. Changes were
-				slow and risky because knowledge lived in a few people.
+				{{.Msg.WorkCase1Prob}}
 			</p>
 		</section>
 
 		<section>
-			<h3>Decisions</h3>
+			<h3>{{.Msg.WorkDecisions}}</h3>
 			<p>
-				Model clear domain boundaries, keep the service surface
-				small, and prefer explicit workflows over hidden side
-				effects. Choose boring, operable building blocks over a
-				complex event mesh.
+				{{.Msg.WorkCase1Dec}}
 			</p>
 		</section>
 
 		<section>
-			<h3>Solution</h3>
+			<h3>{{.Msg.WorkSolution}}</h3>
 			<p>
-				A focused backend service with stable APIs, audited state
-				transitions and operational visibility. Integrations were
-				isolated so the core ledger could evolve independently.
+				{{.Msg.WorkCase1Sol}}
 			</p>
 		</section>
 
 		<section>
-			<h3>Result</h3>
+			<h3>{{.Msg.WorkResult}}</h3>
 			<p>
-				Operations became repeatable, onboarding new engineers
-				got simpler, and the company could change pricing rules
-				without rewriting surrounding systems.
+				{{.Msg.WorkCase1Res}}
 			</p>
 		</section>
 
@@ -80,50 +68,41 @@
 
 <article class="case" id="case-platform">
 
-	<p class="case__eyebrow">Placeholder case study</p>
+	<p class="case__eyebrow">{{.Msg.WorkCaseLabel}}</p>
 
-	<h2>Learning platform foundation for continuous growth</h2>
+	<h2>{{.Msg.WorkCase2H2}}</h2>
 
 	<p class="case__summary">
-		An education business needed a digital platform that could
-		support more users and content without accumulating structural debt.
+		{{.Msg.WorkCase2Sum}}
 	</p>
 
 	<div class="case__grid">
 
 		<section>
-			<h3>Problem</h3>
+			<h3>{{.Msg.WorkProblem}}</h3>
 			<p>
-				The existing application mixed presentation, business
-				rules and integrations. Every feature release increased
-				the cost of the next change.
+				{{.Msg.WorkCase2Prob}}
 			</p>
 		</section>
 
 		<section>
-			<h3>Decisions</h3>
+			<h3>{{.Msg.WorkDecisions}}</h3>
 			<p>
-				Separate the platform into maintainable layers, keep the
-				HTML-facing experience simple, and design data models for
-				long-term content growth rather than short-term screens.
+				{{.Msg.WorkCase2Dec}}
 			</p>
 		</section>
 
 		<section>
-			<h3>Solution</h3>
+			<h3>{{.Msg.WorkSolution}}</h3>
 			<p>
-				A clearer architecture for users, courses and access
-				rules, with backend services shaped around real workflows
-				instead of UI convenience.
+				{{.Msg.WorkCase2Sol}}
 			</p>
 		</section>
 
 		<section>
-			<h3>Result</h3>
+			<h3>{{.Msg.WorkResult}}</h3>
 			<p>
-				The team could ship platform improvements with less
-				regression risk, and the system remained understandable
-				as the catalog and audience expanded.
+				{{.Msg.WorkCase2Res}}
 			</p>
 		</section>
 
@@ -134,50 +113,41 @@
 
 <article class="case" id="case-automation">
 
-	<p class="case__eyebrow">Placeholder case study</p>
+	<p class="case__eyebrow">{{.Msg.WorkCaseLabel}}</p>
 
-	<h2>Process automation for internal operations</h2>
+	<h2>{{.Msg.WorkCase3H2}}</h2>
 
 	<p class="case__summary">
-		A company digitalizing internal processes needed software that
-		reduced manual work without creating a fragile integration tangle.
+		{{.Msg.WorkCase3Sum}}
 	</p>
 
 	<div class="case__grid">
 
 		<section>
-			<h3>Problem</h3>
+			<h3>{{.Msg.WorkProblem}}</h3>
 			<p>
-				Critical workflows depended on spreadsheets and ad-hoc
-				tools. Errors were hard to detect, and every new system
-				increased operational uncertainty.
+				{{.Msg.WorkCase3Prob}}
 			</p>
 		</section>
 
 		<section>
-			<h3>Decisions</h3>
+			<h3>{{.Msg.WorkDecisions}}</h3>
 			<p>
-				Automate only the steps that create durable value, keep
-				human checkpoints where judgment matters, and make every
-				integration ownership-explicit.
+				{{.Msg.WorkCase3Dec}}
 			</p>
 		</section>
 
 		<section>
-			<h3>Solution</h3>
+			<h3>{{.Msg.WorkSolution}}</h3>
 			<p>
-				A restrained automation layer with clear inputs/outputs,
-				recoverable jobs and logs that operators can trust during
-				incidents.
+				{{.Msg.WorkCase3Sol}}
 			</p>
 		</section>
 
 		<section>
-			<h3>Result</h3>
+			<h3>{{.Msg.WorkResult}}</h3>
 			<p>
-				Cycle time dropped on routine work, failure modes became
-				visible, and the organization could extend automation
-				without rewriting the foundation.
+				{{.Msg.WorkCase3Res}}
 			</p>
 		</section>
 
@@ -189,17 +159,15 @@
 <section class="contact" aria-labelledby="work-contact-title">
 
 	<h2 id="work-contact-title">
-		Building something that needs to last?
+		{{.Msg.WorkContactH2}}
 	</h2>
 
 	<p class="contact__description">
-		Tell us about the system you need to create or strengthen.
-		We can discuss the technical path with the same care we apply
-		to delivery.
+		{{.Msg.WorkContactLead}}
 	</p>
 
 	<a href="/contact" class="contact__action">
-		Start a conversation
+		{{.Msg.WorkCTA}}
 	</a>
 
 </section>
