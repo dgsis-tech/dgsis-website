@@ -1,175 +1,146 @@
 {{define "content"}}
 
 <section class="page-intro" aria-labelledby="page-title">
+	<div class="wrap">
+		<p class="eyebrow page-intro__eyebrow">
+			{{.Msg.WorkEyebrow}}
+		</p>
 
-	<p class="page-intro__eyebrow">
-		{{.Msg.WorkEyebrow}}
-	</p>
+		<h1 id="page-title">
+			{{.Msg.WorkH1}}
+		</h1>
 
-	<h1 id="page-title">
-		{{.Msg.WorkH1}}
-	</h1>
+		<p class="page-intro__description">
+			{{.Msg.WorkLead}}
+		</p>
 
-	<p class="page-intro__description">
-		{{.Msg.WorkLead}}
-	</p>
-
-	<p class="provisional-note">
-		{{.Msg.WorkProvisional}}
-	</p>
-
+		<p class="provisional-note">
+			{{.Msg.WorkProvisional}}
+		</p>
+	</div>
 </section>
 
 
 <article class="case" id="case-ledger">
+	<div class="wrap">
+		<p class="case__eyebrow">{{.Msg.WorkCaseLabel}}</p>
 
-	<p class="case__eyebrow">{{.Msg.WorkCaseLabel}}</p>
+		<h2>{{.Msg.WorkCase1H2}}</h2>
 
-	<h2>{{.Msg.WorkCase1H2}}</h2>
+		<p class="case__summary">
+			{{.Msg.WorkCase1Sum}}
+		</p>
 
-	<p class="case__summary">
-		{{.Msg.WorkCase1Sum}}
-	</p>
+		<div class="case__grid">
+			<section>
+				<h3>{{.Msg.WorkProblem}}</h3>
+				<p>{{.Msg.WorkCase1Prob}}</p>
+			</section>
 
-	<div class="case__grid">
+			<section>
+				<h3>{{.Msg.WorkDecisions}}</h3>
+				<p>{{.Msg.WorkCase1Dec}}</p>
+			</section>
 
-		<section>
-			<h3>{{.Msg.WorkProblem}}</h3>
-			<p>
-				{{.Msg.WorkCase1Prob}}
-			</p>
-		</section>
+			<section>
+				<h3>{{.Msg.WorkSolution}}</h3>
+				<p>{{.Msg.WorkCase1Sol}}</p>
+			</section>
 
-		<section>
-			<h3>{{.Msg.WorkDecisions}}</h3>
-			<p>
-				{{.Msg.WorkCase1Dec}}
-			</p>
-		</section>
-
-		<section>
-			<h3>{{.Msg.WorkSolution}}</h3>
-			<p>
-				{{.Msg.WorkCase1Sol}}
-			</p>
-		</section>
-
-		<section>
-			<h3>{{.Msg.WorkResult}}</h3>
-			<p>
-				{{.Msg.WorkCase1Res}}
-			</p>
-		</section>
-
+			<section>
+				<h3>{{.Msg.WorkResult}}</h3>
+				<p>{{.Msg.WorkCase1Res}}</p>
+			</section>
+		</div>
 	</div>
-
 </article>
 
 
 <article class="case" id="case-platform">
+	<div class="wrap">
+		<p class="case__eyebrow">{{.Msg.WorkCaseLabel}}</p>
 
-	<p class="case__eyebrow">{{.Msg.WorkCaseLabel}}</p>
+		<h2>{{.Msg.WorkCase2H2}}</h2>
 
-	<h2>{{.Msg.WorkCase2H2}}</h2>
+		<p class="case__summary">
+			{{.Msg.WorkCase2Sum}}
+		</p>
 
-	<p class="case__summary">
-		{{.Msg.WorkCase2Sum}}
-	</p>
+		<div class="case__grid">
+			<section>
+				<h3>{{.Msg.WorkProblem}}</h3>
+				<p>{{.Msg.WorkCase2Prob}}</p>
+			</section>
 
-	<div class="case__grid">
+			<section>
+				<h3>{{.Msg.WorkDecisions}}</h3>
+				<p>{{.Msg.WorkCase2Dec}}</p>
+			</section>
 
-		<section>
-			<h3>{{.Msg.WorkProblem}}</h3>
-			<p>
-				{{.Msg.WorkCase2Prob}}
-			</p>
-		</section>
+			<section>
+				<h3>{{.Msg.WorkSolution}}</h3>
+				<p>{{.Msg.WorkCase2Sol}}</p>
+			</section>
 
-		<section>
-			<h3>{{.Msg.WorkDecisions}}</h3>
-			<p>
-				{{.Msg.WorkCase2Dec}}
-			</p>
-		</section>
-
-		<section>
-			<h3>{{.Msg.WorkSolution}}</h3>
-			<p>
-				{{.Msg.WorkCase2Sol}}
-			</p>
-		</section>
-
-		<section>
-			<h3>{{.Msg.WorkResult}}</h3>
-			<p>
-				{{.Msg.WorkCase2Res}}
-			</p>
-		</section>
-
+			<section>
+				<h3>{{.Msg.WorkResult}}</h3>
+				<p>{{.Msg.WorkCase2Res}}</p>
+			</section>
+		</div>
 	</div>
-
 </article>
 
 
 <article class="case" id="case-automation">
+	<div class="wrap">
+		<p class="case__eyebrow">{{.Msg.WorkCaseLabel}}</p>
 
-	<p class="case__eyebrow">{{.Msg.WorkCaseLabel}}</p>
+		<h2>{{.Msg.WorkCase3H2}}</h2>
 
-	<h2>{{.Msg.WorkCase3H2}}</h2>
+		<p class="case__summary">
+			{{.Msg.WorkCase3Sum}}
+		</p>
 
-	<p class="case__summary">
-		{{.Msg.WorkCase3Sum}}
-	</p>
+		<div class="case__grid">
+			<section>
+				<h3>{{.Msg.WorkProblem}}</h3>
+				<p>{{.Msg.WorkCase3Prob}}</p>
+			</section>
 
-	<div class="case__grid">
+			<section>
+				<h3>{{.Msg.WorkDecisions}}</h3>
+				<p>{{.Msg.WorkCase3Dec}}</p>
+			</section>
 
-		<section>
-			<h3>{{.Msg.WorkProblem}}</h3>
-			<p>
-				{{.Msg.WorkCase3Prob}}
-			</p>
-		</section>
+			<section>
+				<h3>{{.Msg.WorkSolution}}</h3>
+				<p>{{.Msg.WorkCase3Sol}}</p>
+			</section>
 
-		<section>
-			<h3>{{.Msg.WorkDecisions}}</h3>
-			<p>
-				{{.Msg.WorkCase3Dec}}
-			</p>
-		</section>
-
-		<section>
-			<h3>{{.Msg.WorkSolution}}</h3>
-			<p>
-				{{.Msg.WorkCase3Sol}}
-			</p>
-		</section>
-
-		<section>
-			<h3>{{.Msg.WorkResult}}</h3>
-			<p>
-				{{.Msg.WorkCase3Res}}
-			</p>
-		</section>
-
+			<section>
+				<h3>{{.Msg.WorkResult}}</h3>
+				<p>{{.Msg.WorkCase3Res}}</p>
+			</section>
+		</div>
 	</div>
-
 </article>
 
 
-<section class="contact" aria-labelledby="work-contact-title">
+<section class="band band--accent" aria-labelledby="work-contact-title">
+	<div class="wrap">
+		<div class="section-head">
+			<h2 id="work-contact-title">
+				{{.Msg.WorkContactH2}}
+			</h2>
+			<p>
+				{{.Msg.WorkContactLead}}
+			</p>
+		</div>
 
-	<h2 id="work-contact-title">
-		{{.Msg.WorkContactH2}}
-	</h2>
-
-	<p class="contact__description">
-		{{.Msg.WorkContactLead}}
-	</p>
-
-	<a href="/contact" class="contact__action">
-		{{.Msg.WorkCTA}}
-	</a>
-
+		<a href="/contact" class="btn btn-primary contact__action">
+			{{.Msg.WorkCTA}}
+		</a>
+	</div>
 </section>
 
 {{end}}
