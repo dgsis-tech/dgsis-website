@@ -4,10 +4,6 @@
 	var THEME_KEY = "dgsis_theme";
 	var LANG_KEY = "dgsis_lang";
 	var THEMES = { light: true, dark: true, system: true };
-	var THEME_COLORS = {
-		light: "#F3F7FB",
-		dark: "#081726",
-	};
 
 	function readTheme() {
 		try {
@@ -31,14 +27,6 @@
 		return "dark";
 	}
 
-	function syncSummaryIcon(theme) {
-		var root = document.documentElement;
-		var icons = root.querySelectorAll("[data-prefs-theme-icon]");
-		for (var i = 0; i < icons.length; i++) {
-			icons[i].setAttribute("data-active-theme", theme);
-		}
-	}
-
 	function applyTheme(theme) {
 		var root = document.documentElement;
 		root.setAttribute("data-theme", theme);
@@ -46,7 +34,7 @@
 		var scheme = resolvedScheme(theme);
 		var colorMeta = document.getElementById("meta-theme-color");
 		if (colorMeta) {
-			colorMeta.setAttribute("content", THEME_COLORS[scheme] || THEME_COLORS.dark);
+			colorMeta.setAttribute("content", scheme === "light" ? "#eef1f5" : "#0b0d10");
 		}
 
 		var buttons = document.querySelectorAll("[data-theme-value]");
@@ -56,8 +44,6 @@
 			btn.classList.toggle("is-active", active);
 			btn.setAttribute("aria-pressed", active ? "true" : "false");
 		}
-
-		syncSummaryIcon(theme);
 	}
 
 	function persistTheme(theme) {
@@ -89,15 +75,6 @@
 		}
 	}
 
-	function closePrefsMenus(except) {
-		var menus = document.querySelectorAll("details.prefs-menu");
-		for (var i = 0; i < menus.length; i++) {
-			if (menus[i] !== except) {
-				menus[i].open = false;
-			}
-		}
-	}
-
 	// Apply before paint when possible (script is in <head> without defer).
 	applyTheme(readTheme());
 
@@ -120,21 +97,6 @@
 				applyTheme(value);
 			});
 		}
-
-		document.addEventListener("click", function (event) {
-			var menu = event.target.closest("details.prefs-menu");
-			if (!menu) {
-				closePrefsMenus(null);
-				return;
-			}
-			closePrefsMenus(menu);
-		});
-
-		document.addEventListener("keydown", function (event) {
-			if (event.key === "Escape") {
-				closePrefsMenus(null);
-			}
-		});
 
 		if (window.matchMedia) {
 			var mq = window.matchMedia("(prefers-color-scheme: dark)");

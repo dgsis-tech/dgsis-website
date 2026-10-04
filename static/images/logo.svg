@@ -1,21 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="DGSIS">
-  <defs>
-    <linearGradient id="dgsis-mark" gradientUnits="userSpaceOnUse" x1="9" y1="4" x2="111" y2="116">
-      <stop offset="0%" stop-color="#0B5FA5"/>
-      <stop offset="100%" stop-color="#22C3E6"/>
-    </linearGradient>
-  </defs>
-  <polygon
-    points="60,4 111,32 111,88 60,116 9,88 9,32"
-    fill="none"
-    stroke="url(#dgsis-mark)"
-    stroke-width="5"
-    stroke-linejoin="round"
-  />
-  <line x1="60" y1="36" x2="36" y2="72" stroke="url(#dgsis-mark)" stroke-width="3.5" stroke-linecap="round"/>
-  <line x1="60" y1="36" x2="84" y2="72" stroke="url(#dgsis-mark)" stroke-width="3.5" stroke-linecap="round"/>
-  <line x1="36" y1="72" x2="84" y2="72" stroke="url(#dgsis-mark)" stroke-width="3.5" stroke-linecap="round"/>
-  <circle cx="60" cy="36" r="10" fill="url(#dgsis-mark)"/>
-  <circle cx="36" cy="72" r="8" fill="#0B5FA5"/>
-  <circle cx="84" cy="72" r="8" fill="#22C3E6"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="DGSIS">
+  <!-- Intentional hexagonal mark: structure, connected systems, precision -->
+  <path fill="none" stroke="#f5f7fa" stroke-width="2.2" stroke-linejoin="round"
+        d="M32 4.5 55.5 18v28L32 59.5 8.5 46V18L32 4.5Z"/>
+  <path fill="none" stroke="#9aa4b2" stroke-width="1.6" stroke-linejoin="round"
+        d="M32 16 46 24v16L32 48 18 40V24L32 16Z"/>
+  <circle cx="32" cy="32" r="3.2" fill="#f5f7fa"/>
+  <circle cx="22.5" cy="26.5" r="2.1" fill="#9aa4b2"/>
+  <circle cx="41.5" cy="26.5" r="2.1" fill="#9aa4b2"/>
+  <circle cx="32" cy="42.5" r="2.1" fill="#9aa4b2"/>
+  <path fill="none" stroke="#9aa4b2" stroke-width="1.3"
+        d="M24.2 27.4 29.2 30.6M39.8 27.4 34.8 30.6M32 35.2 32 40.2"/>
 </svg>

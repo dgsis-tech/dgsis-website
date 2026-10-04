@@ -26,7 +26,6 @@ type Msg struct {
 	ThemeLight  string
 	ThemeDark   string
 	ThemeSystem string
-	PrefsLabel  string
 
 	FooterTagline   string
 	FooterCopyright string
@@ -140,12 +139,6 @@ type Msg struct {
 	ContactConvH2      string
 	ContactConvLead    string
 	ContactMailto      string
-	ContactAvailLabel  string
-	ContactAvailValue  string
-	ContactModeLabel   string
-	ContactModeValue   string
-	ContactStackLabel  string
-	ContactStackValue  string
 	ContactName        string
 	ContactEmail       string
 	ContactCompany     string
@@ -245,7 +238,6 @@ var msgEN = Msg{
 	ThemeLight:  "Light",
 	ThemeDark:   "Dark",
 	ThemeSystem: "System",
-	PrefsLabel:  "Language and theme",
 
 	FooterTagline:   "Engineering software that lasts.",
 	FooterCopyright: "© DGSIS LLC",
@@ -359,12 +351,6 @@ var msgEN = Msg{
 	ContactConvH2:      "Start a technical conversation.",
 	ContactConvLead:    "Share context about your product, platform or process. Use the form below, or email us directly.",
 	ContactMailto:      "Email info@dgsis.com",
-	ContactAvailLabel:  "AVAILABILITY",
-	ContactAvailValue:  "Open to new projects",
-	ContactModeLabel:   "ENGAGEMENT",
-	ContactModeValue:   "Remote, projects and retainer",
-	ContactStackLabel:  "CORE STACK",
-	ContactStackValue:  "Go · gRPC · PostgreSQL · HTMX",
 	ContactName:        "Name",
 	ContactEmail:       "Email",
 	ContactCompany:     "Company",
@@ -395,7 +381,6 @@ var msgES = Msg{
 	ThemeLight:  "Claro",
 	ThemeDark:   "Oscuro",
 	ThemeSystem: "Sistema",
-	PrefsLabel:  "Idioma y tema",
 
 	FooterTagline:   "Ingeniería de software que perdura.",
 	FooterCopyright: "© DGSIS LLC",
@@ -509,12 +494,6 @@ var msgES = Msg{
 	ContactConvH2:      "Inicia una conversación técnica.",
 	ContactConvLead:    "Comparte contexto sobre tu producto, plataforma o proceso. Usa el formulario o escríbenos por email.",
 	ContactMailto:      "Email info@dgsis.com",
-	ContactAvailLabel:  "DISPONIBILIDAD",
-	ContactAvailValue:  "Abiertos a nuevos proyectos",
-	ContactModeLabel:   "MODALIDAD",
-	ContactModeValue:   "Remoto, proyectos y retainer",
-	ContactStackLabel:  "STACK PRINCIPAL",
-	ContactStackValue:  "Go · gRPC · PostgreSQL · HTMX",
 	ContactName:        "Nombre",
 	ContactEmail:       "Email",
 	ContactCompany:     "Empresa",

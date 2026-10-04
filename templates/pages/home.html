@@ -1,190 +1,207 @@
 {{define "content"}}
 
-<section class="hero" aria-labelledby="hero-title">
-	<div class="wrap hero-grid">
-		<div>
-			<p class="eyebrow">
-				{{.Msg.HomeEyebrow}}
-			</p>
+<section
+	class="hero"
+	aria-labelledby="hero-title"
+>
 
-			<h1 id="hero-title">
-				{{.Msg.HomeH1}}
-			</h1>
+	<p class="hero__eyebrow">
+		{{.Msg.HomeEyebrow}}
+	</p>
 
-			<p class="lead hero__description">
-				{{.Msg.HomeLead}}
-			</p>
+	<h1 id="hero-title">
+		{{.Msg.HomeH1}}
+	</h1>
 
-			<div class="cta-row hero__actions">
-				<a href="/contact" class="btn btn-primary hero__action">
-					{{.Msg.HomeCTA}}
-				</a>
-				<a href="/engineering" class="btn btn-ghost hero__action hero__action--secondary">
-					{{.Msg.HomeCTASecondary}}
-				</a>
-			</div>
-		</div>
+	<p class="hero__description">
+		{{.Msg.HomeLead}}
+	</p>
 
-		<div class="code-card" aria-hidden="true">
-			<div class="dots"><span></span><span></span><span></span></div>
-			<div class="filename">user_service.go</div>
-			<pre><span class="tok-cm">// gRPC handler — storage swapped per use case</span>
-<span class="tok-kw">func</span> (s *Server) <span class="tok-fn">GetUser</span>(ctx <span class="tok-tp">context.Context</span>,
-    req *pb.<span class="tok-tp">UserRequest</span>) (*pb.<span class="tok-tp">UserResponse</span>, <span class="tok-tp">error</span>) {
-
-    user, err := s.repo.<span class="tok-fn">FindByID</span>(ctx, req.Id)
-    <span class="tok-kw">if</span> err != <span class="tok-kw">nil</span> {
-        <span class="tok-kw">return</span> <span class="tok-kw">nil</span>, status.<span class="tok-fn">Error</span>(
-            codes.NotFound, <span class="tok-str">"user not found"</span>)
-    }
-    <span class="tok-kw">return</span> &amp;pb.<span class="tok-tp">UserResponse</span>{User: user}, <span class="tok-kw">nil</span>
-}</pre>
-		</div>
-	</div>
-</section>
-
-
-<section class="band band--bg" aria-labelledby="engineering-title">
-	<div class="wrap">
-		<div class="section-head">
-			<h2 id="engineering-title">
-				{{.Msg.HomeEngH2}}
-			</h2>
-			<p>
-				{{.Msg.HomeEngLead}}
-			</p>
-		</div>
-
-		<div class="cards-grid">
-			<article class="card engineering__item">
-				<h3>{{.Msg.HomeBackendH3}}</h3>
-				<p>{{.Msg.HomeBackendP}}</p>
-				<div class="tags">
-					<span class="tag">Go</span>
-					<span class="tag">gRPC</span>
-					<span class="tag">APIs</span>
-				</div>
-			</article>
-
-			<article class="card engineering__item">
-				<h3>{{.Msg.HomeArchH3}}</h3>
-				<p>{{.Msg.HomeArchP}}</p>
-				<div class="tags">
-					<span class="tag">Architecture</span>
-					<span class="tag">Boundaries</span>
-				</div>
-			</article>
-
-			<article class="card engineering__item">
-				<h3>{{.Msg.HomePlatformsH3}}</h3>
-				<p>{{.Msg.HomePlatformsP}}</p>
-				<div class="tags">
-					<span class="tag">Platforms</span>
-					<span class="tag">HTMX</span>
-				</div>
-			</article>
-		</div>
-
-		<p class="section__link">
-			<a href="/engineering">{{.Msg.HomeEngLink}}</a>
-		</p>
-	</div>
-</section>
-
-
-<section class="band band--surface" aria-labelledby="approach-title">
-	<div class="wrap approach-grid">
-		<div class="section-head">
-			<h2 id="approach-title">
-				{{.Msg.HomeApproachH2}}
-			</h2>
-			<p>
-				{{.Msg.HomeApproachLead}}
-			</p>
-		</div>
-
-		<div class="principle-list">
-			<div class="principle">
-				<div class="idx mono">01</div>
-				<div>
-					<h4>{{.Msg.HomeSimplicityH3}}</h4>
-					<p>{{.Msg.HomeSimplicityP}}</p>
-				</div>
-			</div>
-
-			<div class="principle">
-				<div class="idx mono">02</div>
-				<div>
-					<h4>{{.Msg.HomeMaintainH3}}</h4>
-					<p>{{.Msg.HomeMaintainP}}</p>
-				</div>
-			</div>
-
-			<div class="principle">
-				<div class="idx mono">03</div>
-				<div>
-					<h4>{{.Msg.HomeJudgmentH3}}</h4>
-					<p>{{.Msg.HomeJudgmentP}}</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-
-
-<section class="band band--bg" aria-labelledby="work-title">
-	<div class="wrap">
-		<div class="section-head">
-			<h2 id="work-title">
-				{{.Msg.HomeWorkH2}}
-			</h2>
-			<p>
-				{{.Msg.HomeWorkLead}}
-			</p>
-			<p class="provisional-note">
-				{{.Msg.HomeProvisional}}
-			</p>
-		</div>
-
-		<div class="cards-grid">
-			<article class="card work__item">
-				<h3>{{.Msg.HomeWork1H3}}</h3>
-				<p>{{.Msg.HomeWork1P}}</p>
-			</article>
-
-			<article class="card work__item">
-				<h3>{{.Msg.HomeWork2H3}}</h3>
-				<p>{{.Msg.HomeWork2P}}</p>
-			</article>
-
-			<article class="card work__item">
-				<h3>{{.Msg.HomeWork3H3}}</h3>
-				<p>{{.Msg.HomeWork3P}}</p>
-			</article>
-		</div>
-
-		<p class="section__link">
-			<a href="/work">{{.Msg.HomeWorkLink}}</a>
-		</p>
-	</div>
-</section>
-
-
-<section class="band band--accent" aria-labelledby="contact-title">
-	<div class="wrap">
-		<div class="section-head">
-			<h2 id="contact-title">
-				{{.Msg.HomeContactH2}}
-			</h2>
-			<p>
-				{{.Msg.HomeContactLead}}
-			</p>
-		</div>
-
-		<a href="/contact" class="btn btn-primary contact__action">
+	<div class="hero__actions">
+		<a href="/contact" class="hero__action">
 			{{.Msg.HomeCTA}}
 		</a>
+		<a href="/engineering" class="hero__action hero__action--secondary">
+			{{.Msg.HomeCTASecondary}}
+		</a>
 	</div>
+
+</section>
+
+
+<section class="approach" aria-labelledby="approach-title">
+
+	<h2 id="approach-title">
+		{{.Msg.HomeApproachH2}}
+	</h2>
+
+	<p class="approach__description">
+		{{.Msg.HomeApproachLead}}
+	</p>
+
+
+	<div class="approach__items">
+
+		<article class="approach__item">
+
+			<h3>
+				{{.Msg.HomeSimplicityH3}}
+			</h3>
+
+			<p>
+				{{.Msg.HomeSimplicityP}}
+			</p>
+
+		</article>
+
+
+		<article class="approach__item">
+
+			<h3>
+				{{.Msg.HomeMaintainH3}}
+			</h3>
+
+			<p>
+				{{.Msg.HomeMaintainP}}
+			</p>
+
+		</article>
+
+
+		<article class="approach__item">
+
+			<h3>
+				{{.Msg.HomeJudgmentH3}}
+			</h3>
+
+			<p>
+				{{.Msg.HomeJudgmentP}}
+			</p>
+
+		</article>
+
+	</div>
+
+</section>
+
+<section class="engineering" aria-labelledby="engineering-title">
+
+	<h2 id="engineering-title">
+		{{.Msg.HomeEngH2}}
+	</h2>
+
+	<p class="engineering__description">
+		{{.Msg.HomeEngLead}}
+	</p>
+
+
+	<div class="engineering__items">
+
+		<article class="engineering__item">
+
+			<h3>
+				{{.Msg.HomeBackendH3}}
+			</h3>
+
+			<p>
+				{{.Msg.HomeBackendP}}
+			</p>
+
+		</article>
+
+
+		<article class="engineering__item">
+
+			<h3>
+				{{.Msg.HomeArchH3}}
+			</h3>
+
+			<p>
+				{{.Msg.HomeArchP}}
+			</p>
+
+		</article>
+
+
+		<article class="engineering__item">
+
+			<h3>
+				{{.Msg.HomePlatformsH3}}
+			</h3>
+
+			<p>
+				{{.Msg.HomePlatformsP}}
+			</p>
+
+		</article>
+
+	</div>
+
+	<p class="section__link">
+		<a href="/engineering">{{.Msg.HomeEngLink}}</a>
+	</p>
+
+</section>
+
+<section class="work" aria-labelledby="work-title">
+
+	<h2 id="work-title">
+		{{.Msg.HomeWorkH2}}
+	</h2>
+
+	<p class="work__description">
+		{{.Msg.HomeWorkLead}}
+	</p>
+
+	<p class="provisional-note">
+		{{.Msg.HomeProvisional}}
+	</p>
+
+	<div class="work__items">
+
+		<article class="work__item">
+			<h3>{{.Msg.HomeWork1H3}}</h3>
+			<p>
+				{{.Msg.HomeWork1P}}
+			</p>
+		</article>
+
+		<article class="work__item">
+			<h3>{{.Msg.HomeWork2H3}}</h3>
+			<p>
+				{{.Msg.HomeWork2P}}
+			</p>
+		</article>
+
+		<article class="work__item">
+			<h3>{{.Msg.HomeWork3H3}}</h3>
+			<p>
+				{{.Msg.HomeWork3P}}
+			</p>
+		</article>
+
+	</div>
+
+	<p class="section__link">
+		<a href="/work">{{.Msg.HomeWorkLink}}</a>
+	</p>
+
+</section>
+
+<section class="contact" aria-labelledby="contact-title">
+
+	<h2 id="contact-title">
+		{{.Msg.HomeContactH2}}
+	</h2>
+
+	<p class="contact__description">
+		{{.Msg.HomeContactLead}}
+	</p>
+
+	<a href="/contact" class="contact__action">
+		{{.Msg.HomeCTA}}
+	</a>
+
 </section>
 
 {{end}}

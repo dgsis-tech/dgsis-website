@@ -1,143 +1,178 @@
 {{define "content"}}
 
 <section class="page-intro" aria-labelledby="page-title">
-	<div class="wrap">
-		<p class="eyebrow page-intro__eyebrow">
-			{{.Msg.EngEyebrow}}
-		</p>
 
-		<h1 id="page-title">
-			{{.Msg.EngH1}}
-		</h1>
+	<p class="page-intro__eyebrow">
+		{{.Msg.EngEyebrow}}
+	</p>
 
-		<p class="page-intro__description">
-			{{.Msg.EngLead}}
-		</p>
-	</div>
+	<h1 id="page-title">
+		{{.Msg.EngH1}}
+	</h1>
+
+	<p class="page-intro__description">
+		{{.Msg.EngLead}}
+	</p>
+
 </section>
 
 
-<section class="band band--bg" aria-labelledby="capabilities-title">
-	<div class="wrap">
-		<div class="section-head">
-			<h2 id="capabilities-title">
-				{{.Msg.EngFocusH2}}
-			</h2>
+<section class="approach" aria-labelledby="capabilities-title">
+
+	<h2 id="capabilities-title">
+		{{.Msg.EngFocusH2}}
+	</h2>
+
+	<p class="approach__description">
+		{{.Msg.EngFocusLead}}
+	</p>
+
+	<div class="approach__items">
+
+		<article class="approach__item">
+
+			<h3>
+				{{.Msg.EngBackendH3}}
+			</h3>
+
 			<p>
-				{{.Msg.EngFocusLead}}
+				{{.Msg.EngBackendP}}
 			</p>
-		</div>
 
-		<div class="cards-grid">
-			<article class="card approach__item">
-				<h3>{{.Msg.EngBackendH3}}</h3>
-				<p>{{.Msg.EngBackendP}}</p>
-				<div class="tags">
-					<span class="tag">Go</span>
-					<span class="tag">gRPC</span>
-				</div>
-			</article>
+		</article>
 
-			<article class="card approach__item">
-				<h3>{{.Msg.EngArchH3}}</h3>
-				<p>{{.Msg.EngArchP}}</p>
-				<div class="tags">
-					<span class="tag">Microservices</span>
-					<span class="tag">Protobuf</span>
-				</div>
-			</article>
+		<article class="approach__item">
 
-			<article class="card approach__item">
-				<h3>{{.Msg.EngPlatformsH3}}</h3>
-				<p>{{.Msg.EngPlatformsP}}</p>
-				<div class="tags">
-					<span class="tag">Platforms</span>
-				</div>
-			</article>
+			<h3>
+				{{.Msg.EngArchH3}}
+			</h3>
 
-			<article class="card approach__item">
-				<h3>{{.Msg.EngIntegrH3}}</h3>
-				<p>{{.Msg.EngIntegrP}}</p>
-				<div class="tags">
-					<span class="tag">Integrations</span>
-				</div>
-			</article>
+			<p>
+				{{.Msg.EngArchP}}
+			</p>
 
-			<article class="card approach__item">
-				<h3>{{.Msg.EngAutoH3}}</h3>
-				<p>{{.Msg.EngAutoP}}</p>
-				<div class="tags">
-					<span class="tag">Automation</span>
-				</div>
-			</article>
+		</article>
 
-			<article class="card approach__item">
-				<h3>{{.Msg.EngSaaSH3}}</h3>
-				<p>{{.Msg.EngSaaSP}}</p>
-				<div class="tags">
-					<span class="tag">SaaS</span>
-				</div>
-			</article>
-		</div>
+		<article class="approach__item">
+
+			<h3>
+				{{.Msg.EngPlatformsH3}}
+			</h3>
+
+			<p>
+				{{.Msg.EngPlatformsP}}
+			</p>
+
+		</article>
+
+		<article class="approach__item">
+
+			<h3>
+				{{.Msg.EngIntegrH3}}
+			</h3>
+
+			<p>
+				{{.Msg.EngIntegrP}}
+			</p>
+
+		</article>
+
+		<article class="approach__item">
+
+			<h3>
+				{{.Msg.EngAutoH3}}
+			</h3>
+
+			<p>
+				{{.Msg.EngAutoP}}
+			</p>
+
+		</article>
+
+		<article class="approach__item">
+
+			<h3>
+				{{.Msg.EngSaaSH3}}
+			</h3>
+
+			<p>
+				{{.Msg.EngSaaSP}}
+			</p>
+
+		</article>
+
 	</div>
+
 </section>
 
 
-<section class="band band--surface" aria-labelledby="method-title">
-	<div class="wrap approach-grid">
-		<div class="section-head">
-			<h2 id="method-title">
-				{{.Msg.EngMethodH2}}
-			</h2>
+<section class="engineering" aria-labelledby="method-title">
+
+	<h2 id="method-title">
+		{{.Msg.EngMethodH2}}
+	</h2>
+
+	<p class="engineering__description">
+		{{.Msg.EngMethodLead}}
+	</p>
+
+	<div class="engineering__items">
+
+		<article class="engineering__item">
+
+			<h3>
+				{{.Msg.EngStep1H3}}
+			</h3>
+
 			<p>
-				{{.Msg.EngMethodLead}}
+				{{.Msg.EngStep1P}}
 			</p>
-		</div>
 
-		<div class="principle-list">
-			<div class="principle">
-				<div class="idx mono">01</div>
-				<div>
-					<h4>{{.Msg.EngStep1H3}}</h4>
-					<p>{{.Msg.EngStep1P}}</p>
-				</div>
-			</div>
+		</article>
 
-			<div class="principle">
-				<div class="idx mono">02</div>
-				<div>
-					<h4>{{.Msg.EngStep2H3}}</h4>
-					<p>{{.Msg.EngStep2P}}</p>
-				</div>
-			</div>
+		<article class="engineering__item">
 
-			<div class="principle">
-				<div class="idx mono">03</div>
-				<div>
-					<h4>{{.Msg.EngStep3H3}}</h4>
-					<p>{{.Msg.EngStep3P}}</p>
-				</div>
-			</div>
-		</div>
+			<h3>
+				{{.Msg.EngStep2H3}}
+			</h3>
+
+			<p>
+				{{.Msg.EngStep2P}}
+			</p>
+
+		</article>
+
+		<article class="engineering__item">
+
+			<h3>
+				{{.Msg.EngStep3H3}}
+			</h3>
+
+			<p>
+				{{.Msg.EngStep3P}}
+			</p>
+
+		</article>
+
 	</div>
+
 </section>
 
 
-<section class="band band--accent" aria-labelledby="engineering-contact-title">
-	<div class="wrap">
-		<div class="section-head">
-			<h2 id="engineering-contact-title">
-				{{.Msg.EngContactH2}}
-			</h2>
-			<p>
-				{{.Msg.EngContactLead}}
-			</p>
-		</div>
+<section class="contact" aria-labelledby="engineering-contact-title">
 
-		<a href="/contact" class="btn btn-primary contact__action">
-			{{.Msg.EngCTA}}
-		</a>
-	</div>
+	<h2 id="engineering-contact-title">
+		{{.Msg.EngContactH2}}
+	</h2>
+
+	<p class="contact__description">
+		{{.Msg.EngContactLead}}
+	</p>
+
+	<a href="/contact" class="contact__action">
+		{{.Msg.EngCTA}}
+	</a>
+
 </section>
 
 {{end}}
