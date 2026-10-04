@@ -140,12 +140,6 @@ type Msg struct {
 	ContactConvH2      string
 	ContactConvLead    string
 	ContactMailto      string
-	ContactAvailLabel  string
-	ContactAvailValue  string
-	ContactModeLabel   string
-	ContactModeValue   string
-	ContactStackLabel  string
-	ContactStackValue  string
 	ContactName        string
 	ContactEmail       string
 	ContactCompany     string
@@ -359,12 +353,6 @@ var msgEN = Msg{
 	ContactConvH2:      "Start a technical conversation.",
 	ContactConvLead:    "Share context about your product, platform or process. Use the form below, or email us directly.",
 	ContactMailto:      "Email info@dgsis.com",
-	ContactAvailLabel:  "AVAILABILITY",
-	ContactAvailValue:  "Open to new projects",
-	ContactModeLabel:   "ENGAGEMENT",
-	ContactModeValue:   "Remote, projects and retainer",
-	ContactStackLabel:  "CORE STACK",
-	ContactStackValue:  "Go · gRPC · PostgreSQL · HTMX",
 	ContactName:        "Name",
 	ContactEmail:       "Email",
 	ContactCompany:     "Company",
@@ -509,12 +497,6 @@ var msgES = Msg{
 	ContactConvH2:      "Inicia una conversación técnica.",
 	ContactConvLead:    "Comparte contexto sobre tu producto, plataforma o proceso. Usa el formulario o escríbenos por email.",
 	ContactMailto:      "Email info@dgsis.com",
-	ContactAvailLabel:  "DISPONIBILIDAD",
-	ContactAvailValue:  "Abiertos a nuevos proyectos",
-	ContactModeLabel:   "MODALIDAD",
-	ContactModeValue:   "Remoto, proyectos y retainer",
-	ContactStackLabel:  "STACK PRINCIPAL",
-	ContactStackValue:  "Go · gRPC · PostgreSQL · HTMX",
 	ContactName:        "Nombre",
 	ContactEmail:       "Email",
 	ContactCompany:     "Empresa",
