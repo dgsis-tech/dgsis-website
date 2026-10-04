@@ -6,8 +6,8 @@
 
 	<meta charset="UTF-8">
 
-	<meta 
-		name="viewport" 
+	<meta
+		name="viewport"
 		content="width=device-width, initial-scale=1.0"
 	>
 
@@ -20,7 +20,6 @@
 		name="robots"
 		content="index, follow"
 	>
-
 
 	<meta
 		property="og:title"
@@ -37,41 +36,84 @@
 		content="website"
 	>
 
+	<meta
+		name="theme-color"
+		content="#0b0d10"
+	>
+
+	<meta
+		name="color-scheme"
+		content="dark"
+	>
 
 	<title>{{.Title}}</title>
 
+	<link
+		rel="icon"
+		href="/static/images/favicon.svg"
+		type="image/svg+xml"
+	>
 
-	<link 
-		rel="stylesheet" 
+	<link
+		rel="stylesheet"
 		href="/static/css/style.css"
 	>
+
+	<script src="/static/js/htmx.min.js" defer></script>
 
 </head>
 
 <body>
 
+	<a class="skip-link" href="#main-content">
+		Skip to content
+	</a>
+
 	<header class="site-header">
 
-		<nav 
+		<nav
 			class="site-navigation"
 			aria-label="Main navigation"
 		>
 
-			<a href="/" class="site-logo">
-				DGSIS
+			<a href="/" class="site-logo" aria-label="DGSIS home">
+				<img
+					class="site-logo__mark"
+					src="/static/images/logo.svg"
+					width="28"
+					height="28"
+					alt=""
+				>
+				<span>DGSIS</span>
 			</a>
 
 			<div class="site-navigation__links">
 
-				<a href="/">
+				<a
+					href="/"
+					{{if eq .CurrentPath "/"}}aria-current="page"{{end}}
+				>
 					Home
 				</a>
 
-				<a href="/work">
+				<a
+					href="/engineering"
+					{{if eq .CurrentPath "/engineering"}}aria-current="page"{{end}}
+				>
+					Engineering
+				</a>
+
+				<a
+					href="/work"
+					{{if eq .CurrentPath "/work"}}aria-current="page"{{end}}
+				>
 					Work
 				</a>
 
-				<a href="/contact">
+				<a
+					href="/contact"
+					{{if eq .CurrentPath "/contact"}}aria-current="page"{{end}}
+				>
 					Contact
 				</a>
 
@@ -85,15 +127,36 @@
 	<main id="main-content">
 
 		{{template "content" .}}
-	
+
 	</main>
 
 
-	<footer class="site-footer">
+	<footer class="site-footer" role="contentinfo">
 
-		<p>
-			© DGSIS. Engineering software that lasts.
-		</p>
+		<div class="site-footer__inner">
+
+			<p class="site-footer__brand">
+				<img
+					class="site-footer__mark"
+					src="/static/images/logo.svg"
+					width="22"
+					height="22"
+					alt=""
+				>
+				<span>DGSIS</span>
+			</p>
+
+			<p>
+				Engineering software that lasts.
+			</p>
+
+			<p class="site-footer__meta">
+				<a href="mailto:info@dgsis.com">info@dgsis.com</a>
+				<span aria-hidden="true">·</span>
+				<span>© DGSIS LLC</span>
+			</p>
+
+		</div>
 
 	</footer>
 

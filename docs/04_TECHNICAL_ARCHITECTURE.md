@@ -1,190 +1,329 @@
-Estamos iniciando una fase de consolidación documental del proyecto DGSIS Website.
-
-Hasta ahora hemos trabajado la fase de Arquitectura Técnica y posteriormente validamos decisiones durante la implementación inicial.
-
-Necesito transformar todas las decisiones arquitectónicas tomadas durante esta fase en un documento oficial que será utilizado como fuente de verdad para:
-
-- desarrollo backend
-- frontend implementation
-- mantenimiento futuro
-- nuevos desarrolladores
-- decisiones técnicas futuras
-
-No quiero un resumen superficial.
-
-Quiero un documento profesional de arquitectura de software.
-
-Genera:
-
 # DGSIS Website — Technical Architecture Document v1
 
-El documento debe contener:
+**Documento:** 04_TECHNICAL_ARCHITECTURE.md  
+**Versión:** v1.0  
+**Estado:** Fuente de verdad alineada con la implementación actual  
+**Alcance:** Arquitectura real del repositorio `dgsis-website` (branch de producto / PR de contenido)
 
 ---
 
 # 1. Architecture Overview
 
-Explicar:
+## Tipo de aplicación
 
-- tipo de aplicación construida
-- objetivo arquitectónico
-- filosofía general
-- principios que guían las decisiones técnicas
+DGSIS Website es una aplicación web **server-rendered (SSR)** escrita en **Go**, que genera HTML en el servidor mediante `html/template` y sirve CSS e imágenes estáticas.
 
-Responder:
+No es una SPA. No hay framework frontend. No hay base de datos. No hay API de negocio más allá de un endpoint de salud.
 
-¿Por qué esta arquitectura representa la filosofía de DGSIS?
+## Objetivo arquitectónico
+
+Demostrar, con la propia implementación, la filosofía DGSIS:
+
+> Engineering software that lasts.
+
+La arquitectura prioriza:
+
+* claridad estructural
+* dependencias mínimas
+* mantenibilidad a largo plazo
+* HTML como base de la experiencia
+* operativa simple (binario + assets + Docker)
+
+## Principios que guían las decisiones
+
+1. **Standard library first** — usar la biblioteca estándar de Go mientras resuelva el problema.
+2. **HTML first** — la experiencia nace del HTML semántico; la interactividad es opcional.
+3. **No abstracción prematura** — no crear capas (`domain`, `services`, partials) sin necesidad real.
+4. **CSS propio** — control total del sistema visual sin frameworks CSS.
+5. **Evolución incremental** — crecer páginas y comportamiento solo cuando aporten valor.
+
+## ¿Por qué representa la filosofía DGSIS?
+
+Porque el sistema es deliberadamente simple, comprensible y operable. Las decisiones técnicas (Go + SSR + templates + CSS propio) tienen razón de ser: menos complejidad accidental, más claridad y una base que puede evolucionar sin reescribir el producto.
 
 ---
 
 # 2. Technical Vision
 
-Documentar:
+## Qué demuestra esta web
 
-- qué tipo de software queremos demostrar con esta web
-- qué principios de ingeniería representa
-- cómo equilibramos simplicidad y profesionalidad
+La web demuestra ingeniería profesional mediante:
 
-Incluir conceptos como:
+* una estructura fácil de leer
+* un runtime predecible
+* ausencia de moda tecnológica innecesaria
+* coherencia entre mensaje de marca e implementación
 
-- mantenibilidad
-- claridad
-- evolución incremental
-- bajo acoplamiento
-- simplicidad operacional
+## Principios de ingeniería representados
+
+| Principio | Cómo se refleja |
+| --- | --- |
+| Mantenibilidad | Pocos archivos, responsabilidades claras, sin frameworks ocultos |
+| Claridad | Handlers y templates legibles de extremo a extremo |
+| Evolución incremental | Páginas nuevas se añaden como templates + rutas |
+| Bajo acoplamiento | Layout global separado de páginas; assets estáticos independientes |
+| Simplicidad operacional | Un binario, `PORT`, Docker multi-stage |
+
+## Equilibrio simplicidad / profesionalidad
+
+La simplicidad no implica improvisación. El proyecto incluye:
+
+* metadata SEO básica
+* landmarks y atributos de accesibilidad
+* logging estructurado
+* health check
+* imagen Docker con usuario no root
+
+La profesionalidad está en la disciplina, no en la cantidad de piezas.
 
 ---
 
 # 3. Technology Stack
 
-Documentar el stack aprobado.
-
-Incluir:
-
 ## Backend
 
-- Go
-- versión definida si existe
-- standard library
-- servidor HTTP utilizado
+| Elemento | Valor actual |
+| --- | --- |
+| Lenguaje | Go (`go.mod` → `go 1.26`) |
+| Servidor HTTP | `net/http` (biblioteca estándar) |
+| Templates | `html/template` |
+| Logging | `log/slog` (JSON a stdout) |
+| Configuración | Variable de entorno `PORT` (default `8080`) |
+| Dependencias externas Go | Ninguna |
 
-Explicar:
+### ¿Por qué Go?
 
-¿Por qué Go?
-
-No como una moda tecnológica, sino desde la filosofía de ingeniería.
-
----
+Go aporta simplicidad, un runtime claro, buen rendimiento y herramientas robustas. En este proyecto no se usa como “stack de moda”, sino como herramienta adecuada para un servidor HTTP pequeño, estable y fácil de operar.
 
 ## Frontend
 
-Documentar:
+| Elemento | Estado actual |
+| --- | --- |
+| HTML | Semántico, SSR |
+| CSS | Propio en `static/css/style.css` |
+| JavaScript | Mínimo: HTMX vendorizado en `static/js/htmx.min.js` |
+| HTMX | Usado para el formulario de contacto (`POST /contact` → fragmento HTML) |
 
-- HTML
-- HTMX
-- CSS propio
-- JavaScript mínimo
+### ¿Por qué este enfoque?
 
-Explicar:
+La web comunica ingeniería. Un frontend mínimo:
 
-¿Por qué este enfoque?
-
----
+* reduce superficie de fallo
+* mejora comprensión
+* mantiene el HTML como contrato principal
+* evita convertir el sitio en una aplicación frontend compleja
 
 ## Infrastructure
 
-Documentar:
+| Elemento | Estado actual |
+| --- | --- |
+| Docker | Implementado (`Dockerfile` multi-stage, Alpine, usuario no root) |
+| Nginx / Traefik | **No implementados** en el repositorio |
+| CI/CD | **No implementado** en el repositorio |
+| Orquestación | Fuera de alcance actual |
 
-- Docker
-- Nginx / Traefik si aplica
-- deployment
-- entorno de ejecución
+Despliegue actual: construir imagen y ejecutar el contenedor exponiendo el puerto `8080`.
 
 ---
 
 # 4. Application Architecture
 
-Documentar:
+## Tipo de arquitectura
 
-- tipo de arquitectura elegida
-- separación de responsabilidades
-- flujo general de la aplicación
+Arquitectura **monolítica mínima** centrada en un proceso HTTP:
 
-Explicar:
-
-Cómo una request viaja desde:
-
+```
 Browser
+  ↓
+net/http ServeMux
+  ↓
+Handler (ruta)
+  ↓
+html/template render  ó  FileServer / JSON
+  ↓
+HTTP Response
+```
 
-↓
+## Separación de responsabilidades
 
-HTTP Server
+| Pieza | Responsabilidad |
+| --- | --- |
+| `cmd/web/main.go` | Arranque, rutas, logging, render |
+| `templates/layouts/base.html` | Documento HTML, header, footer, metadata |
+| `templates/pages/*.html` | Contenido de cada página (`content`) |
+| `static/` | CSS e imágenes públicas |
+| `Dockerfile` | Empaquetado de producción |
 
-↓
+## Flujo de una request de página
 
-Handler
+1. El cliente solicita una ruta (`/`, `/engineering`, `/work`, `/contact`).
+2. El mux de `net/http` selecciona el handler.
+3. El handler valida método (`GET`/`HEAD`).
+4. Se ejecuta el template correspondiente (`base` + `content`).
+5. Se devuelve HTML; errores de render se registran con `slog` y responden `500`.
 
-↓
+## Flujo de assets
 
-Template rendering
+1. Request a `/static/...`
+2. `http.FileServer` sirve desde el directorio `static/`
+3. Sin procesamiento adicional
 
-↓
+## Flujo de health
 
-Response
+1. `GET /health`
+2. Respuesta JSON `{"status":"ok"}`
 
 ---
 
 # 5. Project Structure
 
-Documentar la estructura real del proyecto.
+Estructura real relevante:
 
-Incluir:
+```
+.
+├── cmd/web/main.go
+├── docs/
+│   ├── 01_BRAND_BOOK.md
+│   ├── 02_UX_STRATEGY.md
+│   ├── 03_DESIGN_SYSTEM.md
+│   ├── 04_TECHNICAL_ARCHITECTURE.md
+│   └── 05_IMPLEMENTATION_STATUS.md
+├── static/
+│   ├── css/style.css
+│   └── images/favicon.svg
+├── templates/
+│   ├── layouts/base.html
+│   └── pages/
+│       ├── home.html
+│       ├── engineering.html
+│       ├── work.html
+│       └── contact.html
+├── Dockerfile
+├── go.mod
+└── README.md
+```
 
-- árbol de carpetas actual
-- responsabilidad de cada directorio
-- qué contiene cada package
+## Responsabilidades
 
-Para cada elemento explicar:
+### `cmd/web`
 
-¿Por qué existe?
+Punto de entrada. Existe porque la aplicación es un binario Go convencional.
+
+### `templates/layouts`
+
+Layout global compartido. Existe para no duplicar `<html>`, navegación y footer.
+
+### `templates/pages`
+
+Una plantilla por página. Cada una define el bloque `content`.
+
+### `static`
+
+Assets versionados con el código. CSS e imágenes sin pipeline de bundling.
+
+### `docs`
+
+Fuente de verdad de marca, UX, diseño, arquitectura y estado de implementación.
+
+### ¿Por qué no existe `internal/`?
+
+No hay lógica de dominio, persistencia ni casos de uso que justifiquen packages internos. Introducirlos ahora sería abstracción prematura.
 
 ---
 
 # 6. Go Application Design
 
-Documentar:
+## Organización
 
-- organización del código Go
-- packages
-- responsabilidades
-- convenciones utilizadas
+Todo el runtime vive en `package main` dentro de `cmd/web/main.go`.
 
-Incluir:
+## Piezas principales
 
-- configuración
-- servidor
-- handlers
-- templates
-- assets
+### Configuración
+
+```go
+port := getEnv("PORT", "8080")
+```
+
+Única configuración operativa actual.
+
+### Templates
+
+Cada página se parsea en un set independiente:
+
+```go
+mustParsePage("templates/pages/home.html")
+```
+
+Esto evita colisiones del nombre `content` entre páginas.
+
+### Datos de página
+
+```go
+type pageData struct {
+	Title       string
+	Description string
+	CurrentPath string
+}
+```
+
+`CurrentPath` alimenta `aria-current` en la navegación.
+
+### Handlers
+
+Handlers por ruta registrados con `http.HandleFunc`:
+
+* `/` (exacta)
+* `/engineering`
+* `/work`
+* `/contact`
+* `/health`
+* `/static/` (FileServer)
+
+### Servidor
+
+```go
+server := &http.Server{Addr: addr}
+server.ListenAndServe()
+```
+
+### Logging
+
+`slog` con handler JSON a stdout para observabilidad básica en contenedor/proceso.
+
+### Convenciones
+
+* Nombres claros y funciones pequeñas (`mustParsePage`, `renderPage`, `getEnv`)
+* Sin interfaces inventadas
+* Sin inyección de dependencias formal (no necesaria aún)
 
 ---
 
 # 7. Template Architecture
 
-Documentar:
+## Estrategia
 
-- estrategia de templates
-- layouts
-- páginas
-- bloques reutilizables
+```
+layouts/base.html  → define "base"
+pages/*.html       → definen "content"
+base incluye         {{template "content" .}}
+```
 
-Explicar:
+## Responsabilidades
 
-- responsabilidad de home.html
-- cuándo extraer sections
-- cuándo crear componentes
+| Template | Responsabilidad |
+| --- | --- |
+| `base.html` | HTML shell, metadata, nav, main, footer |
+| `home.html` | Narrativa completa Home (Hero → Approach → Engineering → Work → Contact) |
+| `engineering.html` | Profundización de capacidades y método |
+| `work.html` | Estructura de case studies (sin inventar proyectos) |
+| `contact.html` | Conversación / CTA mailto |
 
-Mantener la filosofía:
+## Cuándo extraer sections o partials
+
+Solo cuando exista reutilización real y repetida. Hoy la duplicación entre páginas es baja y deliberada.
+
+## Regla
 
 No abstraer antes de necesitarlo.
 
@@ -192,201 +331,325 @@ No abstraer antes de necesitarlo.
 
 # 8. HTMX Strategy
 
-Documentar:
+## Estado
 
-- por qué HTMX forma parte del stack
-- qué problemas resuelve
-- dónde debe utilizarse
-- dónde NO debe utilizarse
+HTMX **está integrado** de forma puntual para el formulario de contacto.
 
-Definir:
+* librería vendorizada: `static/js/htmx.min.js`
+* el formulario en `/contact` hace `hx-post="/contact"`
+* el servidor valida y responde un fragmento HTML (`#contact-form-feedback`)
+* sin HTMX, el mismo `POST` funciona (redirect o re-render)
 
-HTMX como mejora progresiva.
+El canal `mailto:info@dgsis.com` se mantiene en paralelo.
+
+## Por qué HTMX aquí
+
+Encaja con HTML-first: feedback parcial sin SPA ni framework frontend.
+
+## Dónde no debe usarse
+
+* navegación principal entre páginas
+* sustituir SSR por un modelo SPA
+* añadir complejidad “por si acaso”
+
+## Principio
+
+HTMX = mejora progresiva para necesidades reales. Hoy: contacto. Mañana: solo si aporta valor claro.
 
 ---
 
 # 9. CSS Architecture
 
-Documentar:
+## Estrategia
 
-- estrategia CSS
-- organización actual
-- variables/tokens
-- metodología utilizada
+Un único archivo CSS propio:
 
-Explicar:
+```
+static/css/style.css
+```
 
-Cómo mantener consistencia visual sin depender de frameworks.
+## Tokens actuales (`:root`)
+
+* color: background, surface, text, muted, border
+* tipografía: system font stack
+* spacing: `--space-unit`
+* layout: `--content-width`, `--section-max`
+
+## Metodología
+
+* selectores semánticos / BEM ligero (`.hero__action`, `.site-navigation__links`)
+* composición por secciones
+* media queries para responsive
+* `prefers-reduced-motion` respetado
+
+## Consistencia sin frameworks
+
+La consistencia viene de:
+
+* variables CSS compartidas
+* patrones visuales repetidos (items con border-top)
+* reglas del design system documental
+
+No se usan Bootstrap, Tailwind ni librerías CSS externas.
 
 ---
 
 # 10. JavaScript Policy
 
-Documentar:
+## Estado actual
 
-- cuándo está permitido JavaScript
-- qué problemas debe resolver
-- qué evitar
+No hay JavaScript en el repositorio.
 
-Principio:
+## Cuándo estaría permitido
 
-JavaScript debe existir por necesidad, no por defecto.
+Solo si resuelve un problema concreto que HTML/CSS (y eventualmente HTMX) no puedan cubrir de forma razonable.
+
+## Qué evitar
+
+* frameworks SPA
+* JS por defecto en cada página
+* animaciones o tracking que no aporten a la experiencia de ingeniería
+
+## Principio
+
+JavaScript debe existir por necesidad, no por hábito.
 
 ---
 
 # 11. Dependency Philosophy
 
-Documentar:
+## Regla
 
-Reglas para añadir dependencias.
+Preferir la biblioteca estándar. Cada dependencia nueva debe justificar:
 
-Incluir:
+1. el problema concreto
+2. el beneficio medible
+3. el coste de mantenimiento/actualización
 
-- preferencia por librerías estándar
-- evaluación antes de añadir paquetes
-- evitar dependencias innecesarias
+## Estado
 
-Responder:
+`go.mod` no declara dependencias de terceros.
 
-¿Cuándo una dependencia está justificada?
+## ¿Cuándo una dependencia está justificada?
+
+Cuando la alternativa standard-library sea claramente peor en seguridad, corrección o mantenibilidad — y el alcance del problema sea real, no hipotético.
 
 ---
 
 # 12. Testing Strategy
 
-Documentar:
+## Estado actual
 
-- estrategia de testing
-- tipos de pruebas previstas
-- qué debe probarse
-- qué no necesita pruebas
+No hay suites automatizadas en el repositorio todavía.
 
-Incluir:
+## Estrategia prevista (proporcional al tamaño)
 
-- unit tests
-- integration tests
-- HTTP tests si aplica
+| Tipo | Qué probar | Prioridad |
+| --- | --- | --- |
+| HTTP smoke | rutas principales → 200; desconocidas → 404; `/health` JSON | Alta |
+| Template/render | handlers devuelven título/contenido esperado | Media |
+| Unit | `getEnv` y helpers pequeños si crecen | Baja hoy |
+| E2E browser | solo si la interacción crece (formularios/HTMX) | Futuro |
+
+## Qué no necesita pruebas todavía
+
+* lógica inexistente de dominio
+* snapshots visuales pesados sin diseño final de tokens
+
+La validación actual se hace por ejecución local, revisión HTML y mediciones Lighthouse/a11y cuando corresponde.
 
 ---
 
 # 13. Security Considerations
 
-Documentar:
+## Prácticas actuales
 
-- prácticas básicas de seguridad
-- manejo de configuración
-- variables de entorno
-- headers
-- validaciones
-- exposición de información
+* HTML escapado por defecto vía `html/template`
+* sin evaluación de input de usuario (sin formularios server-side)
+* contenedor con usuario no root (`appuser`)
+* health endpoint sin datos sensibles
+* configuración por entorno (`PORT`)
+* headers HTTP: `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`, `Permissions-Policy`
+* timeouts en `http.Server` (`ReadHeaderTimeout`, `ReadTimeout`, `WriteTimeout`, `IdleTimeout`)
+
+## Límites actuales / preparación futura
+
+* TLS y HSTS pertenecen al reverse proxy / edge (no implementado en este repo)
+* si se añade formulario: validación, límites de tamaño, CSRF según diseño, y nunca loguear PII innecesaria
+* secretos futuros nunca en el repo; solo entorno/secret manager
+
+## Exposición
+
+La aplicación sirve contenido público estático/SSR. No hay autenticación ni datos privados.
 
 ---
 
 # 14. Performance Principles
 
-Documentar:
+## Objetivos
 
-- objetivos de rendimiento
-- optimización inicial
-- filosofía Lighthouse
-- carga de assets
-- renderizado
+* HTML pequeño y legible
+* CSS único y liviano
+* cero JS en el camino crítico
+* tipografías de sistema (sin webfonts)
+* imágenes mínimas (favicon SVG)
+
+## Filosofía Lighthouse
+
+Priorizar puntuaciones altas por arquitectura simple, no por micro-optimizaciones opacas. Mejoras deben ser comprensibles.
+
+## Assets
+
+Servidos directamente por `FileServer` con `Cache-Control` largo para `/static/`.  
+HTML y CSS pueden comprimirse con gzip cuando el cliente envía `Accept-Encoding: gzip`.  
+No hay bundler ni minificador en el pipeline actual.
+
+## Renderizado
+
+SSR síncrono en proceso; sin hidratación cliente.
 
 ---
 
 # 15. Deployment Architecture
 
-Documentar:
-
-Estado actual:
-
-- cómo se ejecuta
-- cómo se construye
-- cómo se despliega
-
-Separar:
-
 ## Implementado actualmente
 
-## Preparado para futuro
+### Local
 
-Ejemplo:
+```bash
+go run ./cmd/web
+```
 
-CI/CD puede estar definido pero no necesariamente implementado todavía.
+### Docker build
+
+```bash
+docker build .
+```
+
+### Docker run
+
+```bash
+docker run -p 8080:8080 <image>
+```
+
+### Imagen
+
+* stage build: `golang:1.26-alpine`
+* stage runtime: `alpine:latest`
+* binario `dgsis-website`
+* copia `templates/` y `static/`
+* `EXPOSE 8080`
+* `USER appuser`
+
+## Preparado para futuro (no implementado)
+
+* CI/CD
+* reverse proxy (TLS, compresión, headers)
+* observabilidad avanzada (métricas/tracing)
+* múltiples entornos con config externa ampliada
 
 ---
 
 # 16. Evolution Strategy
 
-Definir cómo debe crecer la arquitectura.
+## Cómo añadir nuevas páginas
 
-Responder:
+1. Crear `templates/pages/<name>.html` con `{{define "content"}}`
+2. Parsear con `mustParsePage`
+3. Registrar ruta y `pageData`
+4. Enlazar en navegación solo si la IA lo justifica
 
-¿Cómo añadiremos?
+## Formularios
 
-- nuevas páginas
-- formularios
-- contenido dinámico
-- blog
-- internacionalización
-- nuevas funcionalidades
+Cuando exista necesidad real:
 
-Sin romper la simplicidad inicial.
+* preferir HTML + handler Go
+* evaluar HTMX para feedback parcial
+* no introducir SPA
+
+## Contenido dinámico
+
+Solo si aparece una fuente de datos real. Hoy el contenido es estático en templates.
+
+## Blog / i18n
+
+Descartados o futuros según UX Strategy. No forman parte de la arquitectura activa.
+
+## Regla de crecimiento
+
+Ampliar el sistema sin romper la simplicidad inicial. Si una feature exige muchas capas nuevas, revisar primero si la feature es necesaria.
 
 ---
 
 # 17. Architecture Constraints
 
-Crear una sección explícita:
+## Decisiones que NO deben cambiarse sin razón fuerte
 
-## Decisiones que NO deben cambiarse sin una razón fuerte
-
-Ejemplos:
-
-- no introducir frameworks frontend innecesarios
-- no crear abstracciones prematuras
-- no convertir una web simple en una aplicación compleja
-- mantener Go estándar cuando sea suficiente
-- mantener HTML first
+1. **No** introducir frameworks frontend SPA (React/Vue/Svelte apps) para este sitio.
+2. **No** introducir frameworks CSS externos que oculten el sistema visual.
+3. **No** crear abstracciones de dominio/services sin lógica real.
+4. Mantener **Go standard library** mientras sea suficiente.
+5. Mantener **HTML first** y SSR como modelo principal.
+6. **No** convertir el sitio en plataforma autenticada sin un producto que lo justifique.
+7. HTMX solo como mejora progresiva, nunca como base SPA.
 
 ---
 
 # 18. Approved Decisions vs Future Possibilities
 
-Separar:
+## Decisiones aprobadas e implementadas
 
-## Decisiones aprobadas
+* Go + `net/http` + `html/template`
+* SSR multi-página: Home, Engineering, Work, Contact
+* CSS propio con tokens
+* Docker multi-stage
+* logging `slog`
+* health endpoint
+* metadata básica + accesibilidad estructural
+* contacto por `mailto:` **y** formulario HTMX con validación server-side
+* logo/isotipo SVG hexagonal propio en header, footer y favicon
+* case studies ilustrativos (marcados como placeholder)
 
-## Decisiones pendientes
+## Decisiones aprobadas pero no implementadas aún
+
+* entrega real de email (SMTP/provider) — hoy el form valida y registra en logs
+* case studies de clientes verificados
+* documento de status (`05`) actualizado tras cada incremento
 
 ## Posibles evoluciones futuras
+
+* reverse proxy / TLS termination
+* CI/CD
+* formulario de contacto con validación
+* división del CSS si crece materialmente
+* tests HTTP automatizados
+* headers de seguridad endurecidos de forma sistemática
 
 ---
 
 # 19. Final Architecture Statement
 
-Crear una declaración final:
+En el ecosistema DGSIS, el software se construye para permanecer comprensible.
 
-"Cómo debe construirse software dentro del ecosistema DGSIS."
+La arquitectura correcta es la que resuelve el problema real con la menor complejidad sostenible: decisiones explícitas, dependencias justificadas, HTML como base y un runtime que otro ingeniero pueda operar años después.
 
-Debe resumir:
+Esta web no existe para exhibir tecnología. Existe para demostrar criterio.
 
-- filosofía
-- criterios técnicos
-- forma de tomar decisiones
+> Build systems that remain simple, understandable and maintainable.
 
 ---
 
-Reglas importantes:
+# Relación con otros documentos
 
-1. No inventes arquitectura nueva.
-2. Usa únicamente decisiones aprobadas.
-3. Si durante implementación alguna decisión cambió, documenta la versión final.
-4. Diferencia claramente entre:
-   - decisión aprobada
-   - recomendación
-   - posibilidad futura
+| Documento | Relación |
+| --- | --- |
+| `01_BRAND_BOOK.md` | Identidad y tono que la implementación debe reflejar |
+| `02_UX_STRATEGY.md` | IA y páginas justificadas |
+| `03_DESIGN_SYSTEM.md` | Principios visuales y CSS propio |
+| `05_IMPLEMENTATION_STATUS.md` | Estado de avance y siguiente fase |
 
-El resultado debe estar preparado para convertirse directamente en:
+Si este documento y el código divergen, **el código desplegable manda** y este archivo debe actualizarse en el mismo cambio.
 
-04_TECHNICAL_ARCHITECTURE.md
+---
+
+**Fin del documento**

@@ -1,0 +1,127 @@
+{{define "content"}}
+
+<section class="page-intro" aria-labelledby="page-title">
+
+	<p class="page-intro__eyebrow">
+		Contact
+	</p>
+
+	<h1 id="page-title">
+		Let's build something that lasts.
+	</h1>
+
+	<p class="page-intro__description">
+		If you have a project that needs thoughtful engineering, we
+		welcome a direct conversation about the problem, constraints
+		and the foundation required.
+	</p>
+
+</section>
+
+
+<section class="contact contact--page" aria-labelledby="conversation-title">
+
+	<h2 id="conversation-title">
+		Start a technical conversation.
+	</h2>
+
+	<p class="contact__description">
+		Share context about your product, platform or process. Use the
+		form below, or email us directly.
+	</p>
+
+	<a href="mailto:info@dgsis.com" class="contact__action">
+		Email info@dgsis.com
+	</a>
+
+	<form
+		class="contact-form"
+		id="contact-form"
+		method="post"
+		action="/contact"
+		hx-post="/contact"
+		hx-target="#contact-form-feedback"
+		hx-swap="innerHTML"
+		novalidate
+	>
+
+		<div class="contact-form__field">
+			<label for="name">Name</label>
+			<input
+				id="name"
+				name="name"
+				type="text"
+				autocomplete="name"
+				required
+				maxlength="80"
+			>
+		</div>
+
+		<div class="contact-form__field">
+			<label for="email">Email</label>
+			<input
+				id="email"
+				name="email"
+				type="email"
+				autocomplete="email"
+				required
+				maxlength="120"
+			>
+		</div>
+
+		<div class="contact-form__field">
+			<label for="company">Company <span class="contact-form__optional">(optional)</span></label>
+			<input
+				id="company"
+				name="company"
+				type="text"
+				autocomplete="organization"
+				maxlength="120"
+			>
+		</div>
+
+		<div class="contact-form__field">
+			<label for="message">Project context</label>
+			<textarea
+				id="message"
+				name="message"
+				rows="6"
+				required
+				minlength="20"
+				maxlength="4000"
+				placeholder="What are you building, what constraints matter, and what does success look like?"
+			></textarea>
+		</div>
+
+		<div class="contact-form__hp" aria-hidden="true">
+			<label for="website">Website</label>
+			<input
+				id="website"
+				name="website"
+				type="text"
+				tabindex="-1"
+				autocomplete="off"
+			>
+		</div>
+
+		<button type="submit" class="contact__action contact-form__submit">
+			Send message
+		</button>
+
+		<div
+			id="contact-form-feedback"
+			class="contact-form__feedback"
+			aria-live="polite"
+		>{{.FormFeedback}}</div>
+
+	</form>
+
+	<p class="contact__note">
+		Prefer email? Write to
+		<a href="mailto:info@dgsis.com">info@dgsis.com</a>.
+		Form submissions are validated on the server and recorded for follow-up.
+	</p>
+
+</section>
+
+{{end}}

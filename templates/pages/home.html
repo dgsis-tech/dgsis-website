@@ -1,12 +1,12 @@
 {{define "content"}}
 
-<section 
+<section
 	class="hero"
 	aria-labelledby="hero-title"
 >
 
 	<p class="hero__eyebrow">
-		Software Engineering
+		Software engineering company
 	</p>
 
 	<h1 id="hero-title">
@@ -18,16 +18,21 @@
 		scale and remain maintainable for years.
 	</p>
 
-	<a href="/contact" class="hero__action">
-		Start a conversation
-	</a>
+	<div class="hero__actions">
+		<a href="/contact" class="hero__action">
+			Start a conversation
+		</a>
+		<a href="/engineering" class="hero__action hero__action--secondary">
+			Explore engineering
+		</a>
+	</div>
 
 </section>
 
 
-<section class="approach">
+<section class="approach" aria-labelledby="approach-title">
 
-	<h2>
+	<h2 id="approach-title">
 		Engineering with intention.
 	</h2>
 
@@ -84,9 +89,9 @@
 
 </section>
 
-<section class="engineering">
+<section class="engineering" aria-labelledby="engineering-title">
 
-	<h2>
+	<h2 id="engineering-title">
 		Engineering systems that scale with purpose.
 	</h2>
 
@@ -141,11 +146,15 @@
 
 	</div>
 
+	<p class="section__link">
+		<a href="/engineering">Read more about our engineering approach</a>
+	</p>
+
 </section>
 
-<section class="work">
+<section class="work" aria-labelledby="work-title">
 
-	<h2>
+	<h2 id="work-title">
 		Selected engineering work.
 	</h2>
 
@@ -155,15 +164,47 @@
 		that can evolve over time.
 	</p>
 
-	<p class="work__placeholder">
-		More case studies coming soon.
+	<p class="provisional-note">
+		Illustrative placeholders — not verified client engagements.
+	</p>
+
+	<div class="work__items">
+
+		<article class="work__item">
+			<h3>Operational ledger</h3>
+			<p>
+				Clear domain boundaries and operable APIs for growing
+				product operations.
+			</p>
+		</article>
+
+		<article class="work__item">
+			<h3>Learning platform foundation</h3>
+			<p>
+				Architecture shaped for content growth without
+				structural debt.
+			</p>
+		</article>
+
+		<article class="work__item">
+			<h3>Process automation</h3>
+			<p>
+				Restrained automation with visible failure modes and
+				explicit ownership.
+			</p>
+		</article>
+
+	</div>
+
+	<p class="section__link">
+		<a href="/work">View case studies</a>
 	</p>
 
 </section>
 
-<section class="contact">
+<section class="contact" aria-labelledby="contact-title">
 
-	<h2>
+	<h2 id="contact-title">
 		Let's build something that lasts.
 	</h2>
 
@@ -172,7 +213,7 @@
 		Let's discuss how we can build a solid foundation together.
 	</p>
 
-	<a href="mailto:info@dgsis.com" class="contact__action">
+	<a href="/contact" class="contact__action">
 		Start a conversation
 	</a>
 
