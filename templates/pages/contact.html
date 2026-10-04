@@ -1,122 +1,143 @@
 {{define "content"}}
 
 <section class="page-intro" aria-labelledby="page-title">
+	<div class="wrap">
+		<p class="eyebrow page-intro__eyebrow">
+			{{.Msg.ContactEyebrow}}
+		</p>
 
-	<p class="page-intro__eyebrow">
-		{{.Msg.ContactEyebrow}}
-	</p>
+		<h1 id="page-title">
+			{{.Msg.ContactH1}}
+		</h1>
 
-	<h1 id="page-title">
-		{{.Msg.ContactH1}}
-	</h1>
-
-	<p class="page-intro__description">
-		{{.Msg.ContactLead}}
-	</p>
-
+		<p class="page-intro__description">
+			{{.Msg.ContactLead}}
+		</p>
+	</div>
 </section>
 
 
-<section class="contact contact--page" aria-labelledby="conversation-title">
-
-	<h2 id="conversation-title">
-		{{.Msg.ContactConvH2}}
-	</h2>
-
-	<p class="contact__description">
-		{{.Msg.ContactConvLead}}
-	</p>
-
-	<a href="mailto:info@dgsis.com" class="contact__action">
-		{{.Msg.ContactMailto}}
-	</a>
-
-	<form
-		class="contact-form"
-		id="contact-form"
-		method="post"
-		action="/contact"
-		hx-post="/contact"
-		hx-target="#contact-form-feedback"
-		hx-swap="innerHTML"
-		novalidate
-	>
-
-		<div class="contact-form__field">
-			<label for="name">{{.Msg.ContactName}}</label>
-			<input
-				id="name"
-				name="name"
-				type="text"
-				autocomplete="name"
-				required
-				maxlength="80"
-			>
+<section class="band band--bg" aria-labelledby="conversation-title">
+	<div class="wrap">
+		<div class="section-head">
+			<h2 id="conversation-title">
+				{{.Msg.ContactConvH2}}
+			</h2>
+			<p>
+				{{.Msg.ContactConvLead}}
+			</p>
 		</div>
 
-		<div class="contact-form__field">
-			<label for="email">{{.Msg.ContactEmail}}</label>
-			<input
-				id="email"
-				name="email"
-				type="email"
-				autocomplete="email"
-				required
-				maxlength="120"
-			>
+		<div class="contact-grid">
+			<div class="contact-card">
+				<div class="contact-item">
+					<span class="label mono">EMAIL</span>
+					<a class="value" href="mailto:info@dgsis.com">info@dgsis.com</a>
+				</div>
+				<div class="contact-item">
+					<span class="label mono">{{.Msg.ContactAvailLabel}}</span>
+					<span class="value">{{.Msg.ContactAvailValue}}</span>
+				</div>
+				<div class="contact-item">
+					<span class="label mono">{{.Msg.ContactModeLabel}}</span>
+					<span class="value">{{.Msg.ContactModeValue}}</span>
+				</div>
+				<div class="contact-item">
+					<span class="label mono">{{.Msg.ContactStackLabel}}</span>
+					<span class="value">{{.Msg.ContactStackValue}}</span>
+				</div>
+				<p class="contact-note">
+					<a href="mailto:info@dgsis.com">{{.Msg.ContactMailto}}</a>
+				</p>
+			</div>
+
+			<div class="contact-card">
+				<form
+					class="contact-form"
+					id="contact-form"
+					method="post"
+					action="/contact"
+					hx-post="/contact"
+					hx-target="#contact-form-feedback"
+					hx-swap="innerHTML"
+					novalidate
+				>
+					<div class="contact-form__field">
+						<label for="name">{{.Msg.ContactName}}</label>
+						<input
+							id="name"
+							name="name"
+							type="text"
+							autocomplete="name"
+							required
+							maxlength="80"
+						>
+					</div>
+
+					<div class="contact-form__field">
+						<label for="email">{{.Msg.ContactEmail}}</label>
+						<input
+							id="email"
+							name="email"
+							type="email"
+							autocomplete="email"
+							required
+							maxlength="120"
+						>
+					</div>
+
+					<div class="contact-form__field">
+						<label for="company">{{.Msg.ContactCompany}} <span class="contact-form__optional">{{.Msg.ContactOptional}}</span></label>
+						<input
+							id="company"
+							name="company"
+							type="text"
+							autocomplete="organization"
+							maxlength="120"
+						>
+					</div>
+
+					<div class="contact-form__field">
+						<label for="message">{{.Msg.ContactMessage}}</label>
+						<textarea
+							id="message"
+							name="message"
+							rows="6"
+							required
+							minlength="20"
+							maxlength="4000"
+							placeholder="{{.Msg.ContactPlaceholder}}"
+						></textarea>
+					</div>
+
+					<div class="contact-form__hp" aria-hidden="true">
+						<label for="website">Website</label>
+						<input
+							id="website"
+							name="website"
+							type="text"
+							tabindex="-1"
+							autocomplete="off"
+						>
+					</div>
+
+					<button type="submit" class="btn btn-primary contact__action contact-form__submit">
+						{{.Msg.ContactSubmit}}
+					</button>
+
+					<div
+						id="contact-form-feedback"
+						class="contact-form__feedback"
+						aria-live="polite"
+					>{{.FormFeedback}}</div>
+				</form>
+
+				<p class="contact__note">
+					{{.Msg.ContactNote}}
+				</p>
+			</div>
 		</div>
-
-		<div class="contact-form__field">
-			<label for="company">{{.Msg.ContactCompany}} <span class="contact-form__optional">{{.Msg.ContactOptional}}</span></label>
-			<input
-				id="company"
-				name="company"
-				type="text"
-				autocomplete="organization"
-				maxlength="120"
-			>
-		</div>
-
-		<div class="contact-form__field">
-			<label for="message">{{.Msg.ContactMessage}}</label>
-			<textarea
-				id="message"
-				name="message"
-				rows="6"
-				required
-				minlength="20"
-				maxlength="4000"
-				placeholder="{{.Msg.ContactPlaceholder}}"
-			></textarea>
-		</div>
-
-		<div class="contact-form__hp" aria-hidden="true">
-			<label for="website">Website</label>
-			<input
-				id="website"
-				name="website"
-				type="text"
-				tabindex="-1"
-				autocomplete="off"
-			>
-		</div>
-
-		<button type="submit" class="contact__action contact-form__submit">
-			{{.Msg.ContactSubmit}}
-		</button>
-
-		<div
-			id="contact-form-feedback"
-			class="contact-form__feedback"
-			aria-live="polite"
-		>{{.FormFeedback}}</div>
-
-	</form>
-
-	<p class="contact__note">
-		{{.Msg.ContactNote}}
-	</p>
-
+	</div>
 </section>
 
 {{end}}
